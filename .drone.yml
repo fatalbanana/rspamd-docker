@@ -20,7 +20,7 @@ steps:
         - RSPAMD_VERSION=${DRONE_SEMVER_MAJOR}.${DRONE_SEMVER_MINOR}
         - TARGETARCH=amd64
       platform: linux/amd64
-      repo: rspamd/rspamd
+      repo: nerfdog/rspamd
       tags:
         - pkg-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
       target: pkg
@@ -35,7 +35,7 @@ steps:
         - LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
         - TARGETARCH=amd64
       platform: linux/amd64
-      repo: rspamd/rspamd
+      repo: nerfdog/rspamd
       squash: true
       tags:
         - image-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
@@ -52,7 +52,7 @@ steps:
         - LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
         - TARGETARCH=amd64
       platform: linux/amd64
-      repo: rspamd/rspamd
+      repo: nerfdog/rspamd
       squash: true
       tags:
         - image-asan-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
@@ -86,7 +86,7 @@ steps:
         - RSPAMD_VERSION=${DRONE_SEMVER_MAJOR}.${DRONE_SEMVER_MINOR}
         - TARGETARCH=arm64
       platform: linux/arm64
-      repo: rspamd/rspamd
+      repo: nerfdog/rspamd
       tags:
         - pkg-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
       target: pkg
@@ -101,7 +101,7 @@ steps:
         - LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
         - TARGETARCH=arm64
       platform: linux/arm64
-      repo: rspamd/rspamd
+      repo: nerfdog/rspamd
       squash: true
       tags:
         - image-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
@@ -118,7 +118,7 @@ steps:
         - LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
         - TARGETARCH=arm64
       platform: linux/arm64
-      repo: rspamd/rspamd
+      repo: nerfdog/rspamd
       squash: true
       tags:
         - image-asan-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
@@ -148,8 +148,8 @@ steps:
     image: plugins/manifest
     settings:
       <<: *default_settings
-      target: rspamd/rspamd:image-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
-      template: rspamd/rspamd:image-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
+      target: nerfdog/rspamd:image-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
+      template: nerfdog/rspamd:image-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
       platforms:
         - linux/amd64
         - linux/arm64
@@ -158,8 +158,8 @@ steps:
     image: plugins/manifest
     settings:
       <<: *default_settings
-      target: rspamd/rspamd:image-asan-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
-      template: rspamd/rspamd:image-asan-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
+      target: nerfdog/rspamd:image-asan-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
+      template: nerfdog/rspamd:image-asan-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
       platforms:
         - linux/amd64
         - linux/arm64
@@ -180,8 +180,8 @@ steps:
     settings:
       username: { from_secret: docker_username }
       password: { from_secret: docker_password }
-      target: rspamd/rspamd:${DRONE_SEMVER_SHORT}
-      template: rspamd/rspamd:image-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
+      target: nerfdog/rspamd:${DRONE_SEMVER_SHORT}
+      template: nerfdog/rspamd:image-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
       platforms:
         - linux/amd64
         - linux/arm64
@@ -203,8 +203,8 @@ steps:
     settings:
       username: { from_secret: docker_username }
       password: { from_secret: docker_password }
-      target: rspamd/rspamd:asan-${DRONE_SEMVER_SHORT}
-      template: rspamd/rspamd:image-asan-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
+      target: nerfdog/rspamd:asan-${DRONE_SEMVER_SHORT}
+      template: nerfdog/rspamd:image-asan-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}
       platforms:
         - linux/amd64
         - linux/arm64
