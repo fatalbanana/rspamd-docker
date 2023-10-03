@@ -9,7 +9,7 @@ ARG TARGETARCH
 ENV ASAN_TAG=$ASAN_TAG
 ENV TARGETARCH=$TARGETARCH
 
-COPY	--link --from=rspamd/rspamd:pkg-${TARGETARCH}-${LONG_VERSION} /deb /
+COPY	--from=rspamd/rspamd:pkg-${TARGETARCH}-${LONG_VERSION} /deb /
 
 RUN	apt-get update \
 	&& dpkg -i /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb /deb/rspamd${ASAN_TAG}-dbg_*_${TARGETARCH}.deb || true \
