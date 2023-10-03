@@ -2,7 +2,6 @@ ARG DEBIAN_RELEASE=bookworm
 ARG LONG_VERSION
 ARG TARGETARCH
 
-FROM rspamd/rspamd:pkg-${TARGETARCH}-${LONG_VERSION} AS pkg
 FROM --platform=linux/${TARGETARCH} debian:${DEBIAN_RELEASE}-slim AS preinstall
 
 ARG ASAN_TAG
@@ -10,7 +9,7 @@ ARG TARGETARCH
 ENV ASAN_TAG=$ASAN_TAG
 ENV TARGETARCH=$TARGETARCH
 
-COPY	--from=pkg /deb /
+COPY	--link --from=rspamd/rspamd:pkg-${TARGETARCH}-${LONG_VERSION} /deb /
 
 RUN	apt-get update \
 	&& dpkg -i /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb /deb/rspamd${ASAN_TAG}-dbg_*_${TARGETARCH}.deb || true \
