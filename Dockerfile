@@ -10,13 +10,12 @@ ARG TARGETARCH
 ENV ASAN_TAG=$ASAN_TAG
 ENV TARGETARCH=$TARGETARCH
 
-RUN	--mount=type=cache --from=pkg --target=/deb --source=/deb apt-get update \
+RUN	--mount=type=cache,--from=pkg,--target=/deb,--source=/deb,--readonly apt-get update \
 	&& dpkg -i /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb /deb/rspamd${ASAN_TAG}-dbg_*_${TARGETARCH}.deb || true \
 	&& apt-get install -f -y \
 	&& apt-get -q clean \
 	&& dpkg-query --no-pager -l rspamd${ASAN_TAG} \
-	&& rm -rf /var/cache/debconf /var/lib/apt/lists \
-	&& rm -rf /deb
+	&& rm -rf /var/cache/debconf /var/lib/apt/lists
 COPY	lid.176.ftz /usr/share/rspamd/languages/fasttext_model.ftz
 
 USER	11333:11333
