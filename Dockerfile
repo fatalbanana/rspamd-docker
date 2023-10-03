@@ -7,6 +7,8 @@ FROM --platform=linux/${TARGETARCH} debian:${DEBIAN_RELEASE}-slim AS preinstall
 
 ARG ASAN_TAG
 ARG TARGETARCH
+ENV ASAN_TAG=$ASAN_TAG
+ENV TARGETARCH=$TARGETARCH
 
 COPY	--from=pkg /deb /
 
