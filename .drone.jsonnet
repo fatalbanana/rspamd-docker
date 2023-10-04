@@ -42,6 +42,9 @@ local architecture_specific_pipeline(arch) = {
     depends_on: [
       'pkg_' + arch,
     ],
+    environment: {
+      DOCKER_BUILDKIT: 1,
+    },
     image: 'plugins/docker',
     settings: {
       local asan_build_tag = if std.length(asan_tag) != 0 then ['ASAN_TAG=' + asan_tag] else [],

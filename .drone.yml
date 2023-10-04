@@ -34,6 +34,9 @@
          "depends_on": [
             "pkg_amd64"
          ],
+         "environment": {
+            "DOCKER_BUILDKIT": 1
+         },
          "image": "plugins/docker",
          "name": "install_amd64",
          "settings": {
@@ -61,6 +64,9 @@
          "depends_on": [
             "pkg_amd64"
          ],
+         "environment": {
+            "DOCKER_BUILDKIT": 1
+         },
          "image": "plugins/docker",
          "name": "install_asan_amd64",
          "settings": {
@@ -131,6 +137,9 @@
          "depends_on": [
             "pkg_arm64"
          ],
+         "environment": {
+            "DOCKER_BUILDKIT": 1
+         },
          "image": "plugins/docker",
          "name": "install_arm64",
          "settings": {
@@ -158,6 +167,9 @@
          "depends_on": [
             "pkg_arm64"
          ],
+         "environment": {
+            "DOCKER_BUILDKIT": 1
+         },
          "image": "plugins/docker",
          "name": "install_asan_arm64",
          "settings": {
