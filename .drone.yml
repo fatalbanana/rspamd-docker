@@ -8,7 +8,7 @@
    },
    "steps": [
       {
-         "image": "plugins/buildah",
+         "image": "plugins/buildah-docker",
          "name": "pkg_amd64",
          "settings": {
             "build_args": [
@@ -37,7 +37,7 @@
          "environment": {
             "DOCKER_BUILDKIT": 1
          },
-         "image": "plugins/buildah",
+         "image": "plugins/buildah-docker",
          "name": "install_amd64",
          "settings": {
             "build_args": [
@@ -67,7 +67,7 @@
          "environment": {
             "DOCKER_BUILDKIT": 1
          },
-         "image": "plugins/buildah",
+         "image": "plugins/buildah-docker",
          "name": "install_asan_amd64",
          "settings": {
             "build_args": [
@@ -111,7 +111,7 @@
    },
    "steps": [
       {
-         "image": "plugins/buildah",
+         "image": "plugins/buildah-docker",
          "name": "pkg_arm64",
          "settings": {
             "build_args": [
@@ -140,7 +140,7 @@
          "environment": {
             "DOCKER_BUILDKIT": 1
          },
-         "image": "plugins/buildah",
+         "image": "plugins/buildah-docker",
          "name": "install_arm64",
          "settings": {
             "build_args": [
@@ -170,7 +170,7 @@
          "environment": {
             "DOCKER_BUILDKIT": 1
          },
-         "image": "plugins/buildah",
+         "image": "plugins/buildah-docker",
          "name": "install_asan_arm64",
          "settings": {
             "build_args": [
