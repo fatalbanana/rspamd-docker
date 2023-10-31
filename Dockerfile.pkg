@@ -4,13 +4,11 @@ ARG RSPAMD_VERSION=3.6
 ARG TARGETARCH
 
 FROM rspamd/pkg:debian-${DEBIAN_RELEASE} AS pkg
+ENV RSPAMD_VERSION=$RSPAMD_VERSION
 
 RUN mkdir /build && chown nobody:nogroup /build \
 	&& apt-get update \
 	&& apt-get install -y libfasttext-dev
-
-ARG RSPAMD_VERSION
-ENV RSPAMD_VERSION=$RSPAMD_VERSION
 
 USER nobody
 WORKDIR /build
