@@ -16,6 +16,7 @@
                "TARGETARCH=amd64"
             ],
             "dockerfile": "Dockerfile.pkg",
+            "dry_run": true,
             "password": {
                "from_secret": "docker_password"
             },
@@ -27,6 +28,10 @@
             "target": "pkg",
             "username": {
                "from_secret": "docker_username"
+            },
+            "volumes": {
+               "name": "deb",
+               "path": "/deb"
             }
          }
       },
@@ -54,6 +59,10 @@
             "target": "install",
             "username": {
                "from_secret": "docker_username"
+            },
+            "volumes": {
+               "name": "deb",
+               "path": "/deb"
             }
          }
       },
@@ -82,6 +91,10 @@
             "target": "install",
             "username": {
                "from_secret": "docker_username"
+            },
+            "volumes": {
+               "name": "deb",
+               "path": "/deb"
             }
          }
       }
@@ -93,7 +106,13 @@
          ]
       }
    },
-   "type": "docker"
+   "type": "docker",
+   "volumes": [
+      {
+         "name": "rspamd",
+         "temp": { }
+      }
+   ]
 }
 ---
 {
@@ -113,6 +132,7 @@
                "TARGETARCH=arm64"
             ],
             "dockerfile": "Dockerfile.pkg",
+            "dry_run": true,
             "password": {
                "from_secret": "docker_password"
             },
@@ -124,6 +144,10 @@
             "target": "pkg",
             "username": {
                "from_secret": "docker_username"
+            },
+            "volumes": {
+               "name": "deb",
+               "path": "/deb"
             }
          }
       },
@@ -151,6 +175,10 @@
             "target": "install",
             "username": {
                "from_secret": "docker_username"
+            },
+            "volumes": {
+               "name": "deb",
+               "path": "/deb"
             }
          }
       },
@@ -179,6 +207,10 @@
             "target": "install",
             "username": {
                "from_secret": "docker_username"
+            },
+            "volumes": {
+               "name": "deb",
+               "path": "/deb"
             }
          }
       }
@@ -190,7 +222,13 @@
          ]
       }
    },
-   "type": "docker"
+   "type": "docker",
+   "volumes": [
+      {
+         "name": "rspamd",
+         "temp": { }
+      }
+   ]
 }
 ---
 {
@@ -319,7 +357,7 @@
 }
 ---
 {
-   "hmac": "f77545287adb21df04823be168f6059e32578798dd3fe8fc99671545f126c151",
+   "hmac": "0000000000000000000000000000000000000000000000000000000000000000",
    "kind": "signature"
 }
 ...

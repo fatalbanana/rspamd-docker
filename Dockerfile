@@ -2,15 +2,12 @@ ARG DEBIAN_RELEASE=bookworm
 ARG LONG_VERSION
 ARG TARGETARCH
 
-FROM rspamd/rspamd:pkg-${TARGETARCH}-${LONG_VERSION} AS pkg
-FROM --platform=linux/${TARGETARCH} debian:${DEBIAN_RELEASE}-slim AS preinstall
+FROM --platform=linux/${TARGETARCH} debian:${DEBIAN_RELEASE}-slim AS install
 
 ARG ASAN_TAG
 ARG TARGETARCH
 ENV ASAN_TAG=$ASAN_TAG
 ENV TARGETARCH=$TARGETARCH
-
-COPY	--from=pkg /deb /deb
 
 RUN	apt-get update \
 	&& dpkg -i /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb /deb/rspamd${ASAN_TAG}-dbg_*_${TARGETARCH}.deb || true \
@@ -20,9 +17,6 @@ RUN	apt-get update \
 	&& rm -rf /var/cache/debconf /var/lib/apt/lists \
 	&& rm -rf /deb
 COPY	lid.176.ftz /usr/share/rspamd/languages/fasttext_model.ftz
-
-FROM scratch AS install
-COPY --from=preinstall / /
 
 USER	11333:11333
 

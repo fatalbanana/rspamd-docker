@@ -3,9 +3,9 @@ ARG DEBIAN_RELEASE=bookworm
 ARG RSPAMD_VERSION=3.6
 ARG TARGETARCH
 
-FROM rspamd/pkg:debian-${DEBIAN_RELEASE} AS build
+FROM rspamd/pkg:debian-${DEBIAN_RELEASE} AS pkg
 
-RUN mkdir /build /deb && chown nobody:nogroup /build /deb \
+RUN mkdir /build && chown nobody:nogroup /build \
 	&& apt-get update \
 	&& apt-get install -y libfasttext-dev
 
@@ -23,6 +23,3 @@ RUN	git clone -b ${RSPAMD_VERSION} https://github.com/rspamd/rspamd.git \
 	&& sed -i s/quilt/native/ debian/source/format \
 	&& debuild -us -uc \
 	&& mv /build/*.deb /deb/
-
-FROM scratch AS pkg
-COPY --from=build /deb /deb
