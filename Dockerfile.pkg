@@ -2,15 +2,13 @@ ARG ASAN_TAG
 ARG DEBIAN_RELEASE=bookworm
 ARG RSPAMD_VERSION=3.6
 ARG TARGETARCH
+ENV RSPAMD_VERSION=$RSPAMD_VERSION
 
 FROM rspamd/pkg:debian-${DEBIAN_RELEASE} AS pkg
 
 RUN mkdir /build && chown nobody:nogroup /build \
 	&& apt-get update \
 	&& apt-get install -y libfasttext-dev
-
-ARG RSPAMD_VERSION
-ENV RSPAMD_VERSION=$RSPAMD_VERSION
 
 USER nobody
 WORKDIR /build
