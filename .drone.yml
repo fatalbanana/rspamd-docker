@@ -22,9 +22,6 @@
             },
             "platform": "linux/amd64",
             "repo": "nerfd/rspamd",
-            "tags": [
-               "pkg-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
-            ],
             "target": "pkg",
             "username": {
                "from_secret": "docker_username"
@@ -138,9 +135,6 @@
             },
             "platform": "linux/arm64",
             "repo": "nerfd/rspamd",
-            "tags": [
-               "pkg-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
-            ],
             "target": "pkg",
             "username": {
                "from_secret": "docker_username"

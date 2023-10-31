@@ -1,9 +1,9 @@
 ARG ASAN_TAG
 ARG DEBIAN_RELEASE=bookworm
-ARG RSPAMD_VERSION=3.6
 ARG TARGETARCH
 
 FROM rspamd/pkg:debian-${DEBIAN_RELEASE} AS pkg
+ARG RSPAMD_VERSION=3.6
 ENV RSPAMD_VERSION=$RSPAMD_VERSION
 
 RUN mkdir /build && chown nobody:nogroup /build \

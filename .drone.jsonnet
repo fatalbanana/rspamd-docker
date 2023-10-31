@@ -77,9 +77,6 @@ local architecture_specific_pipeline(arch) = {
           'RSPAMD_VERSION=${DRONE_SEMVER_SHORT}',
           'TARGETARCH=' + arch,
         ],
-        tags: [
-          std.format('pkg-%s-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', arch),
-        ],
         target: 'pkg',
         volumes: {
           name: 'deb',
