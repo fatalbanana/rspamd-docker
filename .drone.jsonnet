@@ -55,6 +55,10 @@ local architecture_specific_pipeline(arch) = {
         std.format('image%s-%s-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', [asan_tag, arch]),
       ],
       target: 'install',
+      volumes: {
+        name: 'deb',
+        path: '/deb',
+      },
     } + step_default_settings + docker_defaults,
   },
   name: 'rspamd_' + arch,
@@ -68,6 +72,7 @@ local architecture_specific_pipeline(arch) = {
       image: 'plugins/docker',
       settings: {
         dockerfile: 'Dockerfile.pkg',
+        dry_run: true,
         build_args: [
           'RSPAMD_VERSION=${DRONE_SEMVER_SHORT}',
           'TARGETARCH=' + arch,
@@ -76,10 +81,20 @@ local architecture_specific_pipeline(arch) = {
           std.format('pkg-%s-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', arch),
         ],
         target: 'pkg',
+        volumes: {
+          name: 'deb',
+          path: '/deb',
+        },
       } + step_default_settings + docker_defaults,
     },
     install_step('install_' + arch, ''),
     install_step('install_asan_' + arch, '-asan'),
+  ],
+  volumes: [
+    {
+      name: 'rspamd',
+      temp: {},
+    },
   ],
 } + trigger_on_tag + pipeline_defaults;
 
