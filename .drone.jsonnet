@@ -109,11 +109,12 @@ local multiarch_pipeline = {
 
 local prepromotion_test(arch, asan_tag) = {
   name: 'prepromo_' + arch,
+  platform: 'linux/' + arch,
   steps: [
     {
       name: 'pre_promotion_test',
       image: std.format('%s:image-%s%s-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', [rspamd_image, arch, asan_tag]),
-      platform: 'linux/' + arch,
+      user: 'root',
       commands: [
         'apt-get update',
         'apt-get install -y python3 python3-pip python3-setuptools python3-demjson python3-psutil python3-requests',

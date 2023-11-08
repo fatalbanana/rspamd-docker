@@ -251,6 +251,7 @@
 {
    "kind": "pipeline",
    "name": "prepromo_amd64",
+   "platform": "linux/amd64",
    "steps": [
       {
          "commands": [
@@ -261,7 +262,7 @@
          ],
          "image": "nerfd/rspamd:image-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
          "name": "pre_promotion_test",
-         "platform": "linux/amd64"
+         "user": "root"
       }
    ],
    "trigger": {
@@ -275,6 +276,7 @@
 {
    "kind": "pipeline",
    "name": "prepromo_arm64",
+   "platform": "linux/arm64",
    "steps": [
       {
          "commands": [
@@ -285,7 +287,7 @@
          ],
          "image": "nerfd/rspamd:image-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
          "name": "pre_promotion_test",
-         "platform": "linux/arm64"
+         "user": "root"
       }
    ],
    "trigger": {
