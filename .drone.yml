@@ -19,7 +19,10 @@
             "password": {
                "from_secret": "docker_password"
             },
-            "platform": "linux/amd64",
+            "platform": {
+               "arch": "amd64",
+               "os": "linux"
+            },
             "repo": "nerfd/rspamd",
             "tags": [
                "pkg-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
@@ -45,7 +48,10 @@
             "password": {
                "from_secret": "docker_password"
             },
-            "platform": "linux/amd64",
+            "platform": {
+               "arch": "amd64",
+               "os": "linux"
+            },
             "repo": "nerfd/rspamd",
             "squash": true,
             "tags": [
@@ -73,7 +79,10 @@
             "password": {
                "from_secret": "docker_password"
             },
-            "platform": "linux/amd64",
+            "platform": {
+               "arch": "amd64",
+               "os": "linux"
+            },
             "repo": "nerfd/rspamd",
             "squash": true,
             "tags": [
@@ -116,7 +125,10 @@
             "password": {
                "from_secret": "docker_password"
             },
-            "platform": "linux/arm64",
+            "platform": {
+               "arch": "arm64",
+               "os": "linux"
+            },
             "repo": "nerfd/rspamd",
             "tags": [
                "pkg-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
@@ -142,7 +154,10 @@
             "password": {
                "from_secret": "docker_password"
             },
-            "platform": "linux/arm64",
+            "platform": {
+               "arch": "arm64",
+               "os": "linux"
+            },
             "repo": "nerfd/rspamd",
             "squash": true,
             "tags": [
@@ -170,7 +185,10 @@
             "password": {
                "from_secret": "docker_password"
             },
-            "platform": "linux/arm64",
+            "platform": {
+               "arch": "arm64",
+               "os": "linux"
+            },
             "repo": "nerfd/rspamd",
             "squash": true,
             "tags": [

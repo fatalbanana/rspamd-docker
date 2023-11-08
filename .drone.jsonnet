@@ -34,7 +34,10 @@ local rspamd_image = 'nerfd/rspamd';
 
 local architecture_specific_pipeline(arch) = {
   local step_default_settings = {
-    platform: 'linux/' + arch,
+    platform: {
+      os: 'linux',
+      arch: arch,
+    },
     repo: rspamd_image,
   },
   local install_step(name, asan_tag) = {
