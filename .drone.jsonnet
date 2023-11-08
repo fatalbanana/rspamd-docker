@@ -109,7 +109,10 @@ local multiarch_pipeline = {
 
 local prepromotion_test(arch, asan_tag) = {
   name: 'prepromo_' + arch,
-  platform: 'linux/' + arch,
+  platform: {
+    os: 'linux',
+    arch: arch,
+  },
   steps: [
     {
       name: 'pre_promotion_test',

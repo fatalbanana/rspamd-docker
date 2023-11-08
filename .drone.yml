@@ -251,7 +251,10 @@
 {
    "kind": "pipeline",
    "name": "prepromo_amd64",
-   "platform": "linux/amd64",
+   "platform": {
+      "arch": "amd64",
+      "os": "linux"
+   },
    "steps": [
       {
          "commands": [
@@ -276,7 +279,10 @@
 {
    "kind": "pipeline",
    "name": "prepromo_arm64",
-   "platform": "linux/arm64",
+   "platform": {
+      "arch": "arm64",
+      "os": "linux"
+   },
    "steps": [
       {
          "commands": [
