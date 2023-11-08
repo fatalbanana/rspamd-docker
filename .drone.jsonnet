@@ -121,7 +121,7 @@ local prepromotion_test(arch, asan_tag) = {
       commands: [
         'apt-get update',
         'apt-get install -y python3 python3-pip python3-setuptools python3-demjson python3-psutil python3-requests',
-        'pip3 install --no-cache --disable-pip-version-check --no-binary :all: robotframework tornado',
+        'pip3 install --break-system-packages --no-cache --disable-pip-version-check --no-binary :all: robotframework tornado',
         'RSPAMD_INSTALLROOT=/usr robot --removekeywords wuks --exclude isbroken $DRONE_WORKSPACE/test/functional/cases',
       ],
     },
