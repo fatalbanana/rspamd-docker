@@ -107,7 +107,28 @@ local multiarch_pipeline = {
   ],
 } + trigger_on_tag + pipeline_defaults;
 
+local prepromotion_test(arch, asan_tag) = {
+  name: 'prepromo_' + arch,
+  steps: [
+    {
+      name: 'pre_promotion_test',
+      image: std.format('%s:image-%s%s-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', [rspamd_image, arch, asan_tag]),
+      platform: 'linux/' + arch,
+      commands: [
+        'apt-get update',
+        'apt-get install -y python3 python3-pip python3-setuptools python3-demjson python3-psutil python3-requests',
+        'pip3 install --no-cache --disable-pip-version-check --no-binary :all: robotframework tornado',
+        'RSPAMD_INSTALLROOT=/usr robot --removekeywords wuks --exclude isbroken $DRONE_WORKSPACE/test/functional/cases',
+      ],
+    },
+  ],
+} + trigger_on_promotion + pipeline_defaults;
+
 local promotion_multiarch(name, step_name, asan_tag) = {
+  depends_on: [
+    'prepromo_amd64',
+    'prepromo_arm64',
+  ],
   name: name,
   steps: [
     {
@@ -133,6 +154,8 @@ local promotion_multiarch(name, step_name, asan_tag) = {
   architecture_specific_pipeline('amd64'),
   architecture_specific_pipeline('arm64'),
   multiarch_pipeline,
+  prepromotion_test('amd64', ''),
+  prepromotion_test('arm64', ''),
   promotion_multiarch('promotion_multiarch', 'promote_multiarch', ''),
   promotion_multiarch('promotion_multiarch_asan', 'promote_multiarch_asan', 'asan-'),
   {
