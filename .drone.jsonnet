@@ -121,12 +121,12 @@ local prepromotion_test(arch, asan_tag) = {
       commands: [
         'apt-get update',
         'apt-get install -y git miltertest python3 python3-dev python3-pip python3-venv redis-server',
-        'python3 -mvenv venv',
-        'bash -c "source venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: setuptools==57.5.0"', # https://github.com/dmeranda/demjson/issues/43
-        'bash -c "source venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: demjson psutil requests robotframework tornado"',
+        'python3 -mvenv $DRONE_WORKSPACE/venv',
+        'bash -c "source $DRONE_WORKSPACE/venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: setuptools==57.5.0"', # https://github.com/dmeranda/demjson/issues/43
+        'bash -c "source $DRONE_WORKSPACE/venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: demjson psutil requests robotframework tornado"',
         'mkdir /src',
         'cd /src && git clone -b ${DRONE_SEMVER_SHORT} https://github.com/rspamd/rspamd.git',
-        'RSPAMD_INSTALLROOT=/usr bash -c "source venv/bin/activate && umask 0000 && robot --removekeywords wuks --exclude isbroken $DRONE_WORKSPACE/rspamd/test/functional/cases"',
+        'RSPAMD_INSTALLROOT=/usr bash -c "source $DRONE_WORKSPACE/venv/bin/activate && umask 0000 && robot --removekeywords wuks --exclude isbroken $DRONE_WORKSPACE/rspamd/test/functional/cases"',
       ],
     },
   ],
