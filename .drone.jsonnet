@@ -120,9 +120,9 @@ local prepromotion_test(arch, asan_tag) = {
       user: 'root',
       commands: [
         'apt-get update',
-        'apt-get install -y git miltertest python3 python3-demjson python3-pip python3-setuptools python3-psutil python3-requests python3-venv redis-server',
+        'apt-get install -y git miltertest python3 python3-demjson python3-dev python3-pip python3-setuptools python3-requests python3-venv redis-server',
         'python3 -mvenv venv',
-        'bash -c "source venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: robotframework tornado"',
+        'bash -c "source venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: psutil robotframework tornado"',
         'git clone -b ${DRONE_SEMVER_SHORT} https://github.com/rspamd/rspamd.git',
         'bash -c "RSPAMD_INSTALLROOT=/usr source venv/bin/activate && robot --removekeywords wuks --exclude isbroken $DRONE_WORKSPACE/rspamd/test/functional/cases"',
       ],
