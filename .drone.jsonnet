@@ -123,7 +123,6 @@ local prepromotion_test(arch, asan_tag) = {
         'apt-get install -y git miltertest python3 python3-pip python3-setuptools python3-demjson python3-psutil python3-requests redis-server',
         'pip3 install --break-system-packages --no-cache --disable-pip-version-check --no-binary :all: robotframework tornado',
         'git clone -b ${DRONE_SEMVER_SHORT} https://github.com/rspamd/rspamd.git',
-        'umask 0000', # unbreaks p0f test
         'RSPAMD_INSTALLROOT=/usr robot --removekeywords wuks --exclude isbroken $DRONE_WORKSPACE/rspamd/test/functional/cases',
       ],
     },
