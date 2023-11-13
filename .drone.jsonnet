@@ -125,7 +125,7 @@ local prepromotion_test(arch, asan_tag) = {
         'bash -c "source venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: setuptools==57.5.0"', # https://github.com/dmeranda/demjson/issues/43
         'bash -c "source venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: demjson psutil requests robotframework tornado"',
         'git clone -b ${DRONE_SEMVER_SHORT} https://github.com/rspamd/rspamd.git',
-        'bash -c "RSPAMD_INSTALLROOT=/usr source venv/bin/activate && robot --removekeywords wuks --exclude isbroken $DRONE_WORKSPACE/rspamd/test/functional/cases"',
+        'bash -c "source venv/bin/activate && RSPAMD_INSTALLROOT=/usr robot --removekeywords wuks --exclude isbroken $DRONE_WORKSPACE/rspamd/test/functional/cases"',
       ],
     },
   ],
