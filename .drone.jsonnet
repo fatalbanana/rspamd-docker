@@ -42,7 +42,8 @@ local architecture_specific_pipeline(arch) = {
     depends_on: [
       'pkg_' + arch,
     ],
-    image: 'plugins/docker',
+    privileged: true,
+    image: 'woodpeckerci/plugin-docker-buildx:2',
     settings: {
       local asan_build_tag = if std.length(asan_tag) != 0 then ['ASAN_TAG=' + asan_tag] else [],
       dockerfile: 'Dockerfile',
@@ -65,7 +66,8 @@ local architecture_specific_pipeline(arch) = {
   steps: [
     {
       name: 'pkg_' + arch,
-      image: 'plugins/docker',
+      privileged: true,
+      image: 'woodpeckerci/plugin-docker-buildx:2',
       settings: {
         dockerfile: 'Dockerfile.pkg',
         build_args: [
