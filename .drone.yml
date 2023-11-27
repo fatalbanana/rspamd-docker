@@ -1,243 +1,99 @@
 ---
 {
    "kind": "pipeline",
-   "name": "rspamd_amd64",
-   "platform": {
-      "arch": "amd64",
-      "os": "linux"
-   },
-   "steps": [
-      {
-         "image": "woodpeckerci/plugin-docker-buildx:2",
-         "name": "pkg_amd64",
-         "privileged": true,
-         "settings": {
-            "build_args": [
-               "RSPAMD_VERSION=${DRONE_SEMVER_SHORT}",
-               "TARGETARCH=amd64"
-            ],
-            "dockerfile": "Dockerfile.pkg",
-            "password": {
-               "from_secret": "docker_password"
-            },
-            "platform": "linux/amd64",
-            "repo": "nerfd/rspamd",
-            "tags": [
-               "pkg-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
-            ],
-            "target": "pkg",
-            "username": {
-               "from_secret": "docker_username"
-            }
-         }
-      },
-      {
-         "depends_on": [
-            "pkg_amd64"
-         ],
-         "image": "woodpeckerci/plugin-docker-buildx:2",
-         "name": "install_amd64",
-         "privileged": true,
-         "settings": {
-            "build_args": [
-               "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
-               "TARGETARCH=amd64"
-            ],
-            "dockerfile": "Dockerfile",
-            "password": {
-               "from_secret": "docker_password"
-            },
-            "platform": "linux/amd64",
-            "repo": "nerfd/rspamd",
-            "squash": true,
-            "tags": [
-               "image-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
-            ],
-            "target": "install",
-            "username": {
-               "from_secret": "docker_username"
-            }
-         }
-      },
-      {
-         "depends_on": [
-            "pkg_amd64"
-         ],
-         "image": "woodpeckerci/plugin-docker-buildx:2",
-         "name": "install_asan_amd64",
-         "privileged": true,
-         "settings": {
-            "build_args": [
-               "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
-               "TARGETARCH=amd64",
-               "ASAN_TAG=-asan"
-            ],
-            "dockerfile": "Dockerfile",
-            "password": {
-               "from_secret": "docker_password"
-            },
-            "platform": "linux/amd64",
-            "repo": "nerfd/rspamd",
-            "squash": true,
-            "tags": [
-               "image-asan-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
-            ],
-            "target": "install",
-            "username": {
-               "from_secret": "docker_username"
-            }
-         }
-      }
-   ],
-   "trigger": {
-      "event": {
-         "include": [
-            "tag"
-         ]
-      }
-   },
-   "type": "docker"
-}
----
-{
-   "kind": "pipeline",
-   "name": "rspamd_arm64",
-   "platform": {
-      "arch": "arm64",
-      "os": "linux"
-   },
-   "steps": [
-      {
-         "image": "woodpeckerci/plugin-docker-buildx:2",
-         "name": "pkg_arm64",
-         "privileged": true,
-         "settings": {
-            "build_args": [
-               "RSPAMD_VERSION=${DRONE_SEMVER_SHORT}",
-               "TARGETARCH=arm64"
-            ],
-            "dockerfile": "Dockerfile.pkg",
-            "password": {
-               "from_secret": "docker_password"
-            },
-            "platform": "linux/arm64",
-            "repo": "nerfd/rspamd",
-            "tags": [
-               "pkg-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
-            ],
-            "target": "pkg",
-            "username": {
-               "from_secret": "docker_username"
-            }
-         }
-      },
-      {
-         "depends_on": [
-            "pkg_arm64"
-         ],
-         "image": "woodpeckerci/plugin-docker-buildx:2",
-         "name": "install_arm64",
-         "privileged": true,
-         "settings": {
-            "build_args": [
-               "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
-               "TARGETARCH=arm64"
-            ],
-            "dockerfile": "Dockerfile",
-            "password": {
-               "from_secret": "docker_password"
-            },
-            "platform": "linux/arm64",
-            "repo": "nerfd/rspamd",
-            "squash": true,
-            "tags": [
-               "image-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
-            ],
-            "target": "install",
-            "username": {
-               "from_secret": "docker_username"
-            }
-         }
-      },
-      {
-         "depends_on": [
-            "pkg_arm64"
-         ],
-         "image": "woodpeckerci/plugin-docker-buildx:2",
-         "name": "install_asan_arm64",
-         "privileged": true,
-         "settings": {
-            "build_args": [
-               "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
-               "TARGETARCH=arm64",
-               "ASAN_TAG=-asan"
-            ],
-            "dockerfile": "Dockerfile",
-            "password": {
-               "from_secret": "docker_password"
-            },
-            "platform": "linux/arm64",
-            "repo": "nerfd/rspamd",
-            "squash": true,
-            "tags": [
-               "image-asan-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
-            ],
-            "target": "install",
-            "username": {
-               "from_secret": "docker_username"
-            }
-         }
-      }
-   ],
-   "trigger": {
-      "event": {
-         "include": [
-            "tag"
-         ]
-      }
-   },
-   "type": "docker"
-}
----
-{
-   "depends_on": [
-      "rspamd_amd64",
-      "rspamd_arm64"
-   ],
-   "kind": "pipeline",
    "name": "rspamd_multiarch",
+   "platform": {
+      "arch": [
+         "linux/amd64",
+         "linux/arm64"
+      ],
+      "os": "linux"
+   },
    "steps": [
       {
-         "image": "plugins/manifest",
-         "name": "multiarch_image",
+         "image": "woodpeckerci/plugin-docker-buildx:2",
+         "name": "pkg_multiarch",
+         "privileged": true,
          "settings": {
+            "build_args": [
+               "RSPAMD_VERSION=${DRONE_SEMVER_SHORT}"
+            ],
+            "dockerfile": "Dockerfile.pkg",
             "password": {
                "from_secret": "docker_password"
             },
-            "platforms": [
+            "platform": [
                "linux/amd64",
                "linux/arm64"
             ],
-            "target": "nerfd/rspamd:image-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
-            "template": "nerfd/rspamd:image-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
+            "repo": "nerfd/rspamd",
+            "tags": [
+               "pkg-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
+            ],
+            "target": "pkg",
             "username": {
                "from_secret": "docker_username"
             }
          }
       },
       {
-         "image": "plugins/manifest",
-         "name": "multiarch_asan_image",
+         "depends_on": [
+            "pkg_amd64",
+            "pkg_arm64"
+         ],
+         "image": "woodpeckerci/plugin-docker-buildx:2",
+         "name": "install_multiarch",
+         "privileged": true,
          "settings": {
+            "build_args": [
+               "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
+            ],
+            "dockerfile": "Dockerfile",
             "password": {
                "from_secret": "docker_password"
             },
-            "platforms": [
+            "platform": [
                "linux/amd64",
                "linux/arm64"
             ],
-            "target": "nerfd/rspamd:image-asan-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
-            "template": "nerfd/rspamd:image-asan-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
+            "repo": "nerfd/rspamd",
+            "squash": true,
+            "tags": [
+               "image-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
+            ],
+            "target": "install",
+            "username": {
+               "from_secret": "docker_username"
+            }
+         }
+      },
+      {
+         "depends_on": [
+            "pkg_amd64",
+            "pkg_arm64"
+         ],
+         "image": "woodpeckerci/plugin-docker-buildx:2",
+         "name": "install_asan_multiarch",
+         "privileged": true,
+         "settings": {
+            "build_args": [
+               "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
+               "ASAN_TAG=-asan"
+            ],
+            "dockerfile": "Dockerfile",
+            "password": {
+               "from_secret": "docker_password"
+            },
+            "platform": [
+               "linux/amd64",
+               "linux/arm64"
+            ],
+            "repo": "nerfd/rspamd",
+            "squash": true,
+            "tags": [
+               "image-asan-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
+            ],
+            "target": "install",
             "username": {
                "from_secret": "docker_username"
             }

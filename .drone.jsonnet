@@ -32,15 +32,16 @@ local trigger_on_promotion = {
 
 local rspamd_image = 'nerfd/rspamd';
 
-local architecture_specific_pipeline(arch) = {
+local multiarch_pipeline(architectures) = {
   local step_default_settings = {
-    platform: 'linux/' + arch,
+    platform: architectures,
     repo: rspamd_image,
   },
   local install_step(name, asan_tag) = {
     name: name,
     depends_on: [
-      'pkg_' + arch,
+      'pkg_amd64',
+      'pkg_arm64',
     ],
     privileged: true,
     image: 'woodpeckerci/plugin-docker-buildx:2',
@@ -49,63 +50,37 @@ local architecture_specific_pipeline(arch) = {
       dockerfile: 'Dockerfile',
       build_args: [
         'LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}',
-        'TARGETARCH=' + arch,
       ] + asan_build_tag,
       squash: true,
       tags: [
-        std.format('image%s-%s-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', [asan_tag, arch]),
+        std.format('image%s-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', [asan_tag]),
       ],
       target: 'install',
     } + step_default_settings + docker_defaults,
   },
-  name: 'rspamd_' + arch,
+  name: 'rspamd_multiarch',
   platform: {
     os: 'linux',
-    arch: arch,
+    arch: architectures,
   },
   steps: [
     {
-      name: 'pkg_' + arch,
+      name: 'pkg_multiarch',
       privileged: true,
       image: 'woodpeckerci/plugin-docker-buildx:2',
       settings: {
         dockerfile: 'Dockerfile.pkg',
         build_args: [
           'RSPAMD_VERSION=${DRONE_SEMVER_SHORT}',
-          'TARGETARCH=' + arch,
         ],
         tags: [
-          std.format('pkg-%s-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', arch),
+          'pkg-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}',
         ],
         target: 'pkg',
       } + step_default_settings + docker_defaults,
     },
-    install_step('install_' + arch, ''),
-    install_step('install_asan_' + arch, '-asan'),
-  ],
-} + trigger_on_tag + pipeline_defaults;
-
-local multiarch_pipeline = {
-  name: 'rspamd_multiarch',
-  depends_on: [
-    'rspamd_amd64',
-    'rspamd_arm64',
-  ],
-  local multiarch_step(step_name, asan_tag) = {
-    name: step_name,
-    image: 'plugins/manifest',
-    settings: {
-      target: std.format('%s:image%s-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', [rspamd_image, asan_tag]),
-      template: std.format('%s:image%s-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', [rspamd_image, asan_tag]),
-      platforms: [
-        'linux/amd64',
-        'linux/arm64',
-      ],
-    } + docker_defaults,
-  },
-  steps: [
-    multiarch_step('multiarch_image', ''),
-    multiarch_step('multiarch_asan_image', '-asan'),
+    install_step('install_multiarch', ''),
+    install_step('install_asan_multiarch', '-asan'),
   ],
 } + trigger_on_tag + pipeline_defaults;
 
@@ -160,9 +135,7 @@ local promotion_multiarch(name, step_name, asan_tag) = {
 } + trigger_on_promotion + pipeline_defaults;
 
 [
-  architecture_specific_pipeline('amd64'),
-  architecture_specific_pipeline('arm64'),
-  multiarch_pipeline,
+  multiarch_pipeline(['linux/amd64', 'linux/arm64']),
   prepromotion_test('amd64', ''),
   prepromotion_test('arm64', ''),
   promotion_multiarch('promotion_multiarch', 'promote_multiarch', ''),
