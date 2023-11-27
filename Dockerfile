@@ -17,8 +17,7 @@ RUN	apt-get update \
 	&& apt-get install -f -y \
 	&& apt-get -q clean \
 	&& dpkg-query --no-pager -l rspamd${ASAN_TAG} \
-	&& rm -rf /var/cache/debconf /var/lib/apt/lists \
-	&& rm -rf /deb
+	&& rm -rf /var/cache/debconf /var/lib/apt/lists
 COPY	lid.176.ftz /usr/share/rspamd/languages/fasttext_model.ftz
 
 FROM scratch AS install
