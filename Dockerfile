@@ -3,7 +3,7 @@ ARG LONG_VERSION
 ARG TARGETARCH
 
 FROM nerfd/rspamd:pkg-${TARGETARCH}-${LONG_VERSION} AS pkg
-FROM --platform=linux/${TARGETARCH} debian:${DEBIAN_RELEASE}-slim AS install
+FROM debian:${DEBIAN_RELEASE}-slim AS install
 
 ARG ASAN_TAG
 ARG TARGETARCH
