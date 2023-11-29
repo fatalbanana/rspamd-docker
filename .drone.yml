@@ -8,7 +8,7 @@
    },
    "steps": [
       {
-         "image": "plugins/docker",
+         "image": "plugins/img-docker",
          "name": "pkg_amd64",
          "settings": {
             "build_args": [
@@ -34,7 +34,7 @@
          "depends_on": [
             "pkg_amd64"
          ],
-         "image": "plugins/docker",
+         "image": "plugins/img-docker",
          "name": "install_amd64",
          "settings": {
             "build_args": [
@@ -61,7 +61,7 @@
          "depends_on": [
             "pkg_amd64"
          ],
-         "image": "plugins/docker",
+         "image": "plugins/img-docker",
          "name": "install_asan_amd64",
          "settings": {
             "build_args": [
@@ -105,7 +105,7 @@
    },
    "steps": [
       {
-         "image": "plugins/docker",
+         "image": "plugins/img-docker",
          "name": "pkg_arm64",
          "settings": {
             "build_args": [
@@ -131,7 +131,7 @@
          "depends_on": [
             "pkg_arm64"
          ],
-         "image": "plugins/docker",
+         "image": "plugins/img-docker",
          "name": "install_arm64",
          "settings": {
             "build_args": [
@@ -158,7 +158,7 @@
          "depends_on": [
             "pkg_arm64"
          ],
-         "image": "plugins/docker",
+         "image": "plugins/img-docker",
          "name": "install_asan_arm64",
          "settings": {
             "build_args": [
