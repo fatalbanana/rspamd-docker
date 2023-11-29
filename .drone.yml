@@ -10,6 +10,7 @@
       {
          "image": "plugins/img-docker",
          "name": "pkg_amd64",
+         "privileged": true,
          "settings": {
             "build_args": [
                "RSPAMD_VERSION=${DRONE_SEMVER_SHORT}",
@@ -36,6 +37,7 @@
          ],
          "image": "plugins/img-docker",
          "name": "install_amd64",
+         "privileged": true,
          "settings": {
             "build_args": [
                "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
@@ -63,6 +65,7 @@
          ],
          "image": "plugins/img-docker",
          "name": "install_asan_amd64",
+         "privileged": true,
          "settings": {
             "build_args": [
                "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
@@ -107,6 +110,7 @@
       {
          "image": "plugins/img-docker",
          "name": "pkg_arm64",
+         "privileged": true,
          "settings": {
             "build_args": [
                "RSPAMD_VERSION=${DRONE_SEMVER_SHORT}",
@@ -133,6 +137,7 @@
          ],
          "image": "plugins/img-docker",
          "name": "install_arm64",
+         "privileged": true,
          "settings": {
             "build_args": [
                "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
@@ -160,6 +165,7 @@
          ],
          "image": "plugins/img-docker",
          "name": "install_asan_arm64",
+         "privileged": true,
          "settings": {
             "build_args": [
                "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
