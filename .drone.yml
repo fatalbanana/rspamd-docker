@@ -21,7 +21,7 @@
                "from_secret": "docker_password"
             },
             "platform": "linux/amd64",
-            "repo": "rspamd/rspamd",
+            "repo": "nerfd/rspamd",
             "tags": [
                "pkg-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
             ],
@@ -48,7 +48,7 @@
                "from_secret": "docker_password"
             },
             "platform": "linux/amd64",
-            "repo": "rspamd/rspamd",
+            "repo": "nerfd/rspamd",
             "squash": true,
             "tags": [
                "image-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
@@ -77,7 +77,7 @@
                "from_secret": "docker_password"
             },
             "platform": "linux/amd64",
-            "repo": "rspamd/rspamd",
+            "repo": "nerfd/rspamd",
             "squash": true,
             "tags": [
                "image-asan-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
@@ -121,7 +121,7 @@
                "from_secret": "docker_password"
             },
             "platform": "linux/arm64",
-            "repo": "rspamd/rspamd",
+            "repo": "nerfd/rspamd",
             "tags": [
                "pkg-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
             ],
@@ -148,7 +148,7 @@
                "from_secret": "docker_password"
             },
             "platform": "linux/arm64",
-            "repo": "rspamd/rspamd",
+            "repo": "nerfd/rspamd",
             "squash": true,
             "tags": [
                "image-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
@@ -177,7 +177,7 @@
                "from_secret": "docker_password"
             },
             "platform": "linux/arm64",
-            "repo": "rspamd/rspamd",
+            "repo": "nerfd/rspamd",
             "squash": true,
             "tags": [
                "image-asan-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
@@ -218,8 +218,8 @@
                "linux/amd64",
                "linux/arm64"
             ],
-            "target": "rspamd/rspamd:image-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
-            "template": "rspamd/rspamd:image-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
+            "target": "nerfd/rspamd:image-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
+            "template": "nerfd/rspamd:image-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
             "username": {
                "from_secret": "docker_username"
             }
@@ -236,8 +236,8 @@
                "linux/amd64",
                "linux/arm64"
             ],
-            "target": "rspamd/rspamd:image-asan-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
-            "template": "rspamd/rspamd:image-asan-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
+            "target": "nerfd/rspamd:image-asan-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
+            "template": "nerfd/rspamd:image-asan-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
             "username": {
                "from_secret": "docker_username"
             }
@@ -273,7 +273,7 @@
             "git -C rspamd cherry-pick ca78b09ba291c702707ac24923e53e153f4e9a11",
             "RSPAMD_INSTALLROOT=/usr bash -c \"source $DRONE_WORKSPACE/venv/bin/activate && umask 0000 && robot --removekeywords wuks --exclude isbroken $DRONE_WORKSPACE/rspamd/test/functional/cases\""
          ],
-         "image": "rspamd/rspamd:image-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
+         "image": "nerfd/rspamd:image-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
          "name": "pre_promotion_test",
          "user": "root"
       }
@@ -305,7 +305,7 @@
             "git -C rspamd cherry-pick ca78b09ba291c702707ac24923e53e153f4e9a11",
             "RSPAMD_INSTALLROOT=/usr bash -c \"source $DRONE_WORKSPACE/venv/bin/activate && umask 0000 && robot --removekeywords wuks --exclude isbroken $DRONE_WORKSPACE/rspamd/test/functional/cases\""
          ],
-         "image": "rspamd/rspamd:image-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
+         "image": "nerfd/rspamd:image-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
          "name": "pre_promotion_test",
          "user": "root"
       }
@@ -341,8 +341,8 @@
                "latest",
                "${DRONE_SEMVER_MAJOR}.${DRONE_SEMVER_MINOR}"
             ],
-            "target": "rspamd/rspamd:${DRONE_SEMVER_SHORT}",
-            "template": "rspamd/rspamd:image-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
+            "target": "nerfd/rspamd:${DRONE_SEMVER_SHORT}",
+            "template": "nerfd/rspamd:image-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
             "username": {
                "from_secret": "docker_username"
             }
@@ -380,8 +380,8 @@
                "asan-latest",
                "asan-${DRONE_SEMVER_MAJOR}.${DRONE_SEMVER_MINOR}"
             ],
-            "target": "rspamd/rspamd:asan-${DRONE_SEMVER_SHORT}",
-            "template": "rspamd/rspamd:image-asan-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
+            "target": "nerfd/rspamd:asan-${DRONE_SEMVER_SHORT}",
+            "template": "nerfd/rspamd:image-asan-ARCH-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
             "username": {
                "from_secret": "docker_username"
             }
@@ -397,7 +397,7 @@
 }
 ---
 {
-   "hmac": "208bdaaab6a69f26deca8aa58e23c4c24cd5c4d8be8b87dac49e6c87a053cab2",
+   "hmac": "0000000000000000000000000000000000000000000000000000000000000000",
    "kind": "signature"
 }
 ...
