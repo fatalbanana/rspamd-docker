@@ -270,6 +270,7 @@
             "bash -c \"source $DRONE_WORKSPACE/venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: setuptools==57.5.0\"",
             "bash -c \"source $DRONE_WORKSPACE/venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: demjson psutil requests robotframework tornado\"",
             "git clone -b ${DRONE_SEMVER_SHORT} https://github.com/rspamd/rspamd.git",
+            "git -C rspamd cherry-pick ca78b09ba291c702707ac24923e53e153f4e9a11",
             "RSPAMD_INSTALLROOT=/usr bash -c \"source $DRONE_WORKSPACE/venv/bin/activate && umask 0000 && robot --removekeywords wuks --exclude isbroken $DRONE_WORKSPACE/rspamd/test/functional/cases\""
          ],
          "image": "rspamd/rspamd:image-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
@@ -301,6 +302,7 @@
             "bash -c \"source $DRONE_WORKSPACE/venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: setuptools==57.5.0\"",
             "bash -c \"source $DRONE_WORKSPACE/venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: demjson psutil requests robotframework tornado\"",
             "git clone -b ${DRONE_SEMVER_SHORT} https://github.com/rspamd/rspamd.git",
+            "git -C rspamd cherry-pick ca78b09ba291c702707ac24923e53e153f4e9a11",
             "RSPAMD_INSTALLROOT=/usr bash -c \"source $DRONE_WORKSPACE/venv/bin/activate && umask 0000 && robot --removekeywords wuks --exclude isbroken $DRONE_WORKSPACE/rspamd/test/functional/cases\""
          ],
          "image": "rspamd/rspamd:image-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
@@ -395,7 +397,7 @@
 }
 ---
 {
-   "hmac": "7f189a9fe8ac9d55f11ab2be798256fb115d049dadcc26fe7e161f86c861e6fc",
+   "hmac": "208bdaaab6a69f26deca8aa58e23c4c24cd5c4d8be8b87dac49e6c87a053cab2",
    "kind": "signature"
 }
 ...
