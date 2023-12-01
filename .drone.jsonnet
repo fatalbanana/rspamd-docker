@@ -43,6 +43,7 @@ local architecture_specific_pipeline(arch) = {
       'pkg_' + arch,
     ],
     image: 'nerfd/drone-docker-plugin',
+    privileged: true,
     settings: {
       local asan_build_tag = if std.length(asan_tag) != 0 then ['ASAN_TAG=' + asan_tag] else [],
       dockerfile: 'Dockerfile',
@@ -66,6 +67,7 @@ local architecture_specific_pipeline(arch) = {
     {
       name: 'pkg_' + arch,
       image: 'nerfd/drone-docker-plugin',
+      privileged: true,
       settings: {
         dockerfile: 'Dockerfile.pkg',
         build_args: [
