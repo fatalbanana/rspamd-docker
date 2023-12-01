@@ -8,9 +8,8 @@
    },
    "steps": [
       {
-         "image": "rspamd/drone-docker-plugin",
+         "image": "nerfd/drone-docker-plugin",
          "name": "pkg_amd64",
-         "privileged": true,
          "settings": {
             "build_args": [
                "RSPAMD_VERSION=${DRONE_SEMVER_SHORT}",
@@ -35,9 +34,8 @@
          "depends_on": [
             "pkg_amd64"
          ],
-         "image": "rspamd/drone-docker-plugin",
+         "image": "nerfd/drone-docker-plugin",
          "name": "install_amd64",
-         "privileged": true,
          "settings": {
             "build_args": [
                "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
@@ -63,9 +61,8 @@
          "depends_on": [
             "pkg_amd64"
          ],
-         "image": "rspamd/drone-docker-plugin",
+         "image": "nerfd/drone-docker-plugin",
          "name": "install_asan_amd64",
-         "privileged": true,
          "settings": {
             "build_args": [
                "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
@@ -108,9 +105,8 @@
    },
    "steps": [
       {
-         "image": "rspamd/drone-docker-plugin",
+         "image": "nerfd/drone-docker-plugin",
          "name": "pkg_arm64",
-         "privileged": true,
          "settings": {
             "build_args": [
                "RSPAMD_VERSION=${DRONE_SEMVER_SHORT}",
@@ -135,9 +131,8 @@
          "depends_on": [
             "pkg_arm64"
          ],
-         "image": "rspamd/drone-docker-plugin",
+         "image": "nerfd/drone-docker-plugin",
          "name": "install_arm64",
-         "privileged": true,
          "settings": {
             "build_args": [
                "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
@@ -163,9 +158,8 @@
          "depends_on": [
             "pkg_arm64"
          ],
-         "image": "rspamd/drone-docker-plugin",
+         "image": "nerfd/drone-docker-plugin",
          "name": "install_asan_arm64",
-         "privileged": true,
          "settings": {
             "build_args": [
                "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",

@@ -42,8 +42,7 @@ local architecture_specific_pipeline(arch) = {
     depends_on: [
       'pkg_' + arch,
     ],
-    image: 'rspamd/drone-docker-plugin',
-    privileged: true,
+    image: 'nerfd/drone-docker-plugin',
     settings: {
       local asan_build_tag = if std.length(asan_tag) != 0 then ['ASAN_TAG=' + asan_tag] else [],
       dockerfile: 'Dockerfile',
@@ -66,8 +65,7 @@ local architecture_specific_pipeline(arch) = {
   steps: [
     {
       name: 'pkg_' + arch,
-      image: 'rspamd/drone-docker-plugin',
-      privileged: true,
+      image: 'nerfd/drone-docker-plugin',
       settings: {
         dockerfile: 'Dockerfile.pkg',
         build_args: [
