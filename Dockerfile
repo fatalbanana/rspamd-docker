@@ -15,6 +15,7 @@ RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
 	&& apt-get install -f -y \
 	&& apt-get -q clean \
 	&& apt purge -y rspamd${ASAN_TAG} \
+	&& userdel _rspamd \
 	&& rm -rf /var/cache/debconf /var/lib/apt/lists
 
 RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
