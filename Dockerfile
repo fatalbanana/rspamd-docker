@@ -14,7 +14,7 @@ RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
 	&& dpkg -i /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb /deb/rspamd${ASAN_TAG}-dbg_*_${TARGETARCH}.deb || true \
 	&& apt-get install -f -y \
 	&& apt-get -q clean \
-	&& apt purge -y rspamd${ASAN_TAG} \
+	&& apt-get purge -y rspamd${ASAN_TAG} \
 	&& userdel _rspamd \
 	&& rm -rf /var/cache/debconf /var/lib/apt/lists
 
