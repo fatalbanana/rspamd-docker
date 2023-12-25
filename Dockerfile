@@ -14,8 +14,14 @@ RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
 	&& dpkg -i /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb /deb/rspamd${ASAN_TAG}-dbg_*_${TARGETARCH}.deb || true \
 	&& apt-get install -f -y \
 	&& apt-get -q clean \
-	&& dpkg-query --no-pager -l rspamd${ASAN_TAG} \
+	&& apt purge rspamd${ASAN_TAG} \
 	&& rm -rf /var/cache/debconf /var/lib/apt/lists
+
+RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
+	&& dpkg -i /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb /deb/rspamd${ASAN_TAG}-dbg_*_${TARGETARCH}.deb \
+	&& apt-get -q clean \
+	&& rm -rf /var/cache/debconf /var/lib/apt/lists
+
 COPY	lid.176.ftz /usr/share/rspamd/languages/fasttext_model.ftz
 
 USER	11333:11333
