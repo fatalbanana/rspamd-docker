@@ -1,0 +1,70 @@
+commit 29d59b292aea77f6da76aef63598a23095f8197c
+Author: Andrew Lewis <nerf@judo.za.org>
+Date:   Tue Dec 26 16:01:26 2023 +0200
+
+    [Minor] debian: add missing stuff to rspamd-asan package
+
+diff --git a/debian/rspamd-asan.init b/debian/rspamd-asan.init
+new file mode 120000
+index 000000000..37e251fd3
+--- /dev/null
++++ b/debian/rspamd-asan.init
+@@ -0,0 +1 @@
++rspamd.init
+\ No newline at end of file
+diff --git a/debian/rspamd-asan.lintian-overrides b/debian/rspamd-asan.lintian-overrides
+new file mode 120000
+index 000000000..38ae88579
+--- /dev/null
++++ b/debian/rspamd-asan.lintian-overrides
+@@ -0,0 +1 @@
++rspamd.lintian-overrides
+\ No newline at end of file
+diff --git a/debian/rspamd-asan.logrotate b/debian/rspamd-asan.logrotate
+new file mode 120000
+index 000000000..4515ea73a
+--- /dev/null
++++ b/debian/rspamd-asan.logrotate
+@@ -0,0 +1 @@
++rspamd.logrotate
+\ No newline at end of file
+diff --git a/debian/rspamd-asan.maintscript b/debian/rspamd-asan.maintscript
+new file mode 120000
+index 000000000..e9fd12a12
+--- /dev/null
++++ b/debian/rspamd-asan.maintscript
+@@ -0,0 +1 @@
++rspamd.maintscript
+\ No newline at end of file
+diff --git a/debian/rspamd-asan.manpages b/debian/rspamd-asan.manpages
+new file mode 120000
+index 000000000..7314c6a58
+--- /dev/null
++++ b/debian/rspamd-asan.manpages
+@@ -0,0 +1 @@
++rspamd.manpages
+\ No newline at end of file
+diff --git a/debian/rspamd-asan.postinst b/debian/rspamd-asan.postinst
+new file mode 120000
+index 000000000..f52ea8dbb
+--- /dev/null
++++ b/debian/rspamd-asan.postinst
+@@ -0,0 +1 @@
++postinst
+\ No newline at end of file
+diff --git a/debian/rspamd-asan.postrm b/debian/rspamd-asan.postrm
+new file mode 120000
+index 000000000..bf8a3b363
+--- /dev/null
++++ b/debian/rspamd-asan.postrm
+@@ -0,0 +1 @@
++postrm
+\ No newline at end of file
+diff --git a/debian/rspamd-asan.prerm b/debian/rspamd-asan.prerm
+new file mode 120000
+index 000000000..7d8486f13
+--- /dev/null
++++ b/debian/rspamd-asan.prerm
+@@ -0,0 +1 @@
++prerm
+\ No newline at end of file
