@@ -16,6 +16,7 @@ RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
 	&& apt-get -q clean \
 	&& apt-get purge -y rspamd${ASAN_TAG} \
 	&& userdel _rspamd \
+	&& bash -c "find /etc -newer /proc/1 | xargs touch -d '2000-01-01 00:00:00' {} \;" \
 	&& rm -rf /var/log/apt/* /var/log/dpkg.log /var/cache/debconf /var/cache/ldconfig/aux-cache /var/lib/apt/lists
 
 RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
