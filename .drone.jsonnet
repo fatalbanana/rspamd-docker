@@ -49,7 +49,6 @@ local architecture_specific_pipeline(arch) = {
       dockerfile: 'Dockerfile',
       build_args: [
         'LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}',
-        'SOURCE_DATE_EPOCH=0',
         'TARGETARCH=' + arch,
       ] + asan_build_tag,
       squash: true,
@@ -73,7 +72,6 @@ local architecture_specific_pipeline(arch) = {
         dockerfile: 'Dockerfile.pkg',
         build_args: [
           'RSPAMD_VERSION=${DRONE_SEMVER_SHORT}',
-          'SOURCE_DATE_EPOCH=0',
           'TARGETARCH=' + arch,
         ],
         tags: [
