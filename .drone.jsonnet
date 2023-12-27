@@ -48,6 +48,7 @@ local architecture_specific_pipeline(arch) = {
       local asan_build_tag = if std.length(asan_tag) != 0 then ['ASAN_TAG=' + asan_tag] else [],
       dockerfile: 'Dockerfile',
       build_args: [
+        'DOCKER_BUILDKIT=1',
         'LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}',
         'SOURCE_DATE_EPOCH=0',
         'TARGETARCH=' + arch,
@@ -72,6 +73,7 @@ local architecture_specific_pipeline(arch) = {
       settings: {
         dockerfile: 'Dockerfile.pkg',
         build_args: [
+          'DOCKER_BUILDKIT=1',
           'RSPAMD_VERSION=${DRONE_SEMVER_SHORT}',
           'SOURCE_DATE_EPOCH=0',
           'TARGETARCH=' + arch,
