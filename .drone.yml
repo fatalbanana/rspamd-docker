@@ -13,7 +13,6 @@
          "privileged": true,
          "settings": {
             "build_args": [
-               "DOCKER_BUILDKIT=1",
                "RSPAMD_VERSION=${DRONE_SEMVER_SHORT}",
                "SOURCE_DATE_EPOCH=0",
                "TARGETARCH=amd64"
@@ -42,7 +41,6 @@
          "privileged": true,
          "settings": {
             "build_args": [
-               "DOCKER_BUILDKIT=1",
                "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
                "SOURCE_DATE_EPOCH=0",
                "TARGETARCH=amd64"
@@ -72,7 +70,6 @@
          "privileged": true,
          "settings": {
             "build_args": [
-               "DOCKER_BUILDKIT=1",
                "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
                "SOURCE_DATE_EPOCH=0",
                "TARGETARCH=amd64",
@@ -119,7 +116,6 @@
          "privileged": true,
          "settings": {
             "build_args": [
-               "DOCKER_BUILDKIT=1",
                "RSPAMD_VERSION=${DRONE_SEMVER_SHORT}",
                "SOURCE_DATE_EPOCH=0",
                "TARGETARCH=arm64"
@@ -148,7 +144,6 @@
          "privileged": true,
          "settings": {
             "build_args": [
-               "DOCKER_BUILDKIT=1",
                "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
                "SOURCE_DATE_EPOCH=0",
                "TARGETARCH=arm64"
@@ -178,7 +173,6 @@
          "privileged": true,
          "settings": {
             "build_args": [
-               "DOCKER_BUILDKIT=1",
                "LONG_VERSION=${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}",
                "SOURCE_DATE_EPOCH=0",
                "TARGETARCH=arm64",
