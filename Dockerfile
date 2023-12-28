@@ -21,10 +21,7 @@ RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
 
 RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
 	&& dpkg -i /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb /deb/rspamd${ASAN_TAG}-dbg_*_${TARGETARCH}.deb \
-	&& apt-get -q clean \
-	&& rm -rf /var/log/apt/* /var/log/dpkg.log /var/cache/debconf/* /var/cache/ldconfig/aux-cache /var/lib/apt/lists/* \
-	&& ls -l /var/lib/apt/.wh.lists || true \
-	&& bash -c "find / -mount -newer /proc/1 -not -path '/dev/**' -not -path '/proc/**' -not -path '/sys/**' | xargs touch -h -d '2000-01-01 00:00:00'"
+	&& rm -rf /var/log/apt/* /var/log/dpkg.log /var/cache/debconf/* /var/lib/apt/lists/*
 
 COPY	lid.176.ftz /usr/share/rspamd/languages/fasttext_model.ftz
 
