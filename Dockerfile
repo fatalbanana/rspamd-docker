@@ -25,7 +25,7 @@ RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
 	&& rm -rf /var/log/apt/* /var/log/dpkg.log /var/cache/debconf /var/cache/ldconfig/aux-cache /var/lib/apt/lists /var/cache/.wh.debconf var/lib/apt/.wh.lists  \
 	&& bash -c "find / -mount -newer /proc/1 -not -path '/dev/**' -not -path '/proc/**' -not -path '/sys/**' | xargs touch -h -d '2000-01-01 00:00:00'"
 
-COPY	lid.176.ftz /usr/share/rspamd/languages/fasttext_model.ftz
+ADD	lid.176.ftz.tar /usr/share/rspamd/languages/
 
 USER	11333:11333
 
