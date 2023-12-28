@@ -21,7 +21,7 @@ RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
 
 RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
 	&& dpkg -i /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb /deb/rspamd${ASAN_TAG}-dbg_*_${TARGETARCH}.deb \
-	&& rm -rf /var/log/apt/* /var/log/dpkg.log /var/cache/debconf/* /var/lib/apt/lists/*
+	&& rm -rf /var/log/dpkg.log
 
 COPY	lid.176.ftz /usr/share/rspamd/languages/fasttext_model.ftz
 
