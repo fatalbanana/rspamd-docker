@@ -16,13 +16,14 @@ RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
 	&& apt-get -q clean \
 	&& apt-get purge -y rspamd${ASAN_TAG} \
 	&& userdel _rspamd \
-	&& rm -rf /var/log/apt/* /var/log/dpkg.log /var/cache/debconf /var/cache/ldconfig/aux-cache /var/lib/apt/lists /var/cache/.wh.debconf var/lib/apt/.wh.lists  \
+	&& rm -rf /var/log/apt/* /var/log/dpkg.log /var/cache/debconf /var/cache/ldconfig/aux-cache /var/lib/apt/lists /var/cache/.wh.debconf /var/lib/apt/.wh.lists  \
 	&& bash -c "find / -mount -newer /proc/1 -not -path '/dev/**' -not -path '/proc/**' -not -path '/sys/**' | xargs touch -h -d '2000-01-01 00:00:00'"
 
 RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb apt-get update \
 	&& dpkg -i /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb /deb/rspamd${ASAN_TAG}-dbg_*_${TARGETARCH}.deb \
 	&& apt-get -q clean \
-	&& rm -rf /var/log/apt/* /var/log/dpkg.log /var/cache/debconf /var/cache/ldconfig/aux-cache /var/lib/apt/lists /var/cache/.wh.debconf var/lib/apt/.wh.lists  \
+	&& rm -rf /var/log/apt/* /var/log/dpkg.log /var/cache/debconf /var/cache/ldconfig/aux-cache /var/lib/apt/lists /var/cache/.wh.debconf /var/lib/apt/.wh.lists  \
+	&& ls -l /var/lib/apt/.wh.lists || true \
 	&& bash -c "find / -mount -newer /proc/1 -not -path '/dev/**' -not -path '/proc/**' -not -path '/sys/**' | xargs touch -h -d '2000-01-01 00:00:00'"
 
 ADD	lid.176.ftz.tar /usr/share/rspamd/languages/
