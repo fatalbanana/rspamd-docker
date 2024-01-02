@@ -684,7 +684,7 @@
       "cron_prepromo_arm64"
    ],
    "kind": "pipeline",
-   "name": "cron_promotion",
+   "name": "cron-promotion",
    "steps": [
       {
          "image": "plugins/manifest",
@@ -721,7 +721,7 @@
       "cron_prepromo_arm64"
    ],
    "kind": "pipeline",
-   "name": "cron_promotion",
+   "name": "cron-asan-promotion",
    "steps": [
       {
          "image": "plugins/manifest",

@@ -167,7 +167,7 @@ local cron_promotion(asan_tag) = {
     'cron_prepromo_amd64',
     'cron_prepromo_arm64',
   ],
-  name: 'cron_promotion',
+  name: std.format('cron-%spromotion', [asan_tag]),
   steps: [
     {
       name: 'cron_promotion',
