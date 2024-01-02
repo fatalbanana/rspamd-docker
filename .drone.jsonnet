@@ -173,7 +173,7 @@ local cron_promotion(asan_tag) = {
       name: 'cron_promotion',
       image: 'plugins/manifest',
       settings: {
-        target: std.format('%s:nightly%s', [rspamd_image, asan_tag]),
+        target: std.format('%s:%snightly', [rspamd_image, asan_tag]),
         template: std.format('%s:nightly-%sARCH', [rspamd_image, asan_tag]),
         platforms: [
           'linux/amd64',
