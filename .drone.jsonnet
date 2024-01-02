@@ -22,7 +22,7 @@ local trigger_on(what_event) = {
   },
 };
 
-local rspamd_image = 'rspamd/rspamd';
+local rspamd_image = 'nerfd/rspamd';
 
 local image_tags(asan_tag, arch) = [
   std.format('image%s-%s-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', [asan_tag, arch]),
