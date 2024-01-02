@@ -106,8 +106,14 @@ local multiarch_pipeline = {
   ],
 } + trigger_on('tag') + pipeline_defaults;
 
-local prepromotion_test(arch, asan_tag) = {
-  name: 'prepromo_' + arch,
+local promo_get_image_name(rspamd_image, arch) =
+  std.format('%s:image-%s-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', [rspamd_image, arch]);
+
+local cron_promo_get_image_name(rspamd_image, arch) =
+  std.format('%s:nightly-%s', [rspamd_image, arch]);
+
+local prepromotion_test(arch, get_image_name=promo_get_image_name) = {
+  name: 'prepromo' + arch,
   platform: {
     os: 'linux',
     arch: arch,
@@ -115,7 +121,7 @@ local prepromotion_test(arch, asan_tag) = {
   steps: [
     {
       name: 'pre_promotion_test',
-      image: std.format('%s:image-%s%s-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', [rspamd_image, arch, asan_tag]),
+      image: get_image_name(rspamd_image, arch),
       user: 'root',
       commands: [
         'apt-get update',
@@ -156,6 +162,28 @@ local promotion_multiarch(name, step_name, asan_tag) = {
   ],
 } + trigger_on('promote') + pipeline_defaults;
 
+local cron_promotion(asan_tag) = {
+  depends_on: [
+    'cron_prepromo_amd64',
+    'cron_prepromo_arm64',
+  ],
+  name: 'cron_promotion',
+  steps: [
+    {
+      name: 'cron_promotion',
+      image: 'plugins/manifest',
+      settings: {
+        target: std.format('%s:nightly%s', [rspamd_image, asan_tag]),
+        template: std.format('%s:nightly-%sARCH', [rspamd_image, asan_tag]),
+        platforms: [
+          'linux/amd64',
+          'linux/arm64',
+        ],
+      } + docker_defaults,
+    },
+  ],
+} + trigger_on('cron') + pipeline_defaults;
+
 local cron_image_tags(asan_tag, arch) = [
   std.format('nightly%s-%s', [asan_tag, arch]),
 ];
@@ -168,16 +196,27 @@ local cron_archspecific_splice(arch) = {
   name: 'cron_rspamd_' + arch,
 } + trigger_on('cron');
 
+local cron_prepromo_splice(arch) = {
+  name: 'cron_prepromo_' + arch,
+  depends_on: [
+    'cron_rspamd_' + arch,
+  ],
+} + trigger_on('cron');
+
 [
   architecture_specific_pipeline('amd64'),
   architecture_specific_pipeline('arm64'),
   architecture_specific_pipeline('amd64', cron_image_tags, cron_pkg_tags, 'master', '${DRONE_BUILD_CREATED}') + cron_archspecific_splice('amd64'),
   architecture_specific_pipeline('arm64', cron_image_tags, cron_pkg_tags, 'master', '${DRONE_BUILD_CREATED}') + cron_archspecific_splice('arm64'),
   multiarch_pipeline,
-  prepromotion_test('amd64', ''),
-  prepromotion_test('arm64', ''),
+  prepromotion_test('amd64'),
+  prepromotion_test('arm64'),
+  prepromotion_test('amd64', cron_promo_get_image_name) + cron_prepromo_splice('amd64'),
+  prepromotion_test('arm64', cron_promo_get_image_name) + cron_prepromo_splice('arm64'),
   promotion_multiarch('promotion_multiarch', 'promote_multiarch', ''),
   promotion_multiarch('promotion_multiarch_asan', 'promote_multiarch_asan', 'asan-'),
+  cron_promotion(''),
+  cron_promotion('asan-'),
   {
     kind: 'signature',
     hmac: '0000000000000000000000000000000000000000000000000000000000000000',
