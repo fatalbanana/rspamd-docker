@@ -156,9 +156,6 @@ local promotion_multiarch(name, step_name, asan_tag) = {
   ],
 } + trigger_on('promote') + pipeline_defaults;
 
-local cron_archspecific_splice = {
-} + trigger_on('cron');
-
 local cron_image_tags(asan_tag, arch) = [
   std.format('nightly%s-%s', [asan_tag, arch]),
 ];
@@ -167,11 +164,15 @@ local cron_pkg_tags(arch) = [
   std.format('pkg-%s-nightly', arch),
 ];
 
+local cron_archspecific_splice(arch) = {
+  name: 'cron_rspamd_' + arch,
+} + trigger_on('cron');
+
 [
   architecture_specific_pipeline('amd64'),
   architecture_specific_pipeline('arm64'),
-  architecture_specific_pipeline('amd64', cron_image_tags, cron_pkg_tags, 'master', '${DRONE_BUILD_CREATED}') + trigger_on('cron'),
-  architecture_specific_pipeline('arm64', cron_image_tags, cron_pkg_tags, 'master', '${DRONE_BUILD_CREATED}') + trigger_on('cron'),
+  architecture_specific_pipeline('amd64', cron_image_tags, cron_pkg_tags, 'master', '${DRONE_BUILD_CREATED}') + cron_archspecific_splice('amd64'),
+  architecture_specific_pipeline('arm64', cron_image_tags, cron_pkg_tags, 'master', '${DRONE_BUILD_CREATED}') + cron_archspecific_splice('arm64'),
   multiarch_pipeline,
   prepromotion_test('amd64', ''),
   prepromotion_test('arm64', ''),
