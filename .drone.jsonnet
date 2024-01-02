@@ -112,7 +112,7 @@ local promo_get_image_name(rspamd_image, arch) =
 local cron_promo_get_image_name(rspamd_image, arch) =
   std.format('%s:nightly-%s', [rspamd_image, arch]);
 
-local prepromotion_test(arch, get_image_name=promo_get_image_name) = {
+local prepromotion_test(arch, get_image_name=promo_get_image_name, branch_name='${DRONE_SEMVER_SHORT}') = {
   name: 'prepromo_' + arch,
   platform: {
     os: 'linux',
@@ -129,7 +129,7 @@ local prepromotion_test(arch, get_image_name=promo_get_image_name) = {
         'python3 -mvenv $DRONE_WORKSPACE/venv',
         'bash -c "source $DRONE_WORKSPACE/venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: setuptools==57.5.0"',  // https://github.com/dmeranda/demjson/issues/43
         'bash -c "source $DRONE_WORKSPACE/venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: demjson psutil requests robotframework tornado"',
-        'git clone -b ${DRONE_SEMVER_SHORT} https://github.com/rspamd/rspamd.git',
+        'git clone -b ' + branch_name + ' https://github.com/rspamd/rspamd.git',
         'RSPAMD_INSTALLROOT=/usr bash -c "source $DRONE_WORKSPACE/venv/bin/activate && umask 0000 && robot --removekeywords wuks --exclude isbroken $DRONE_WORKSPACE/rspamd/test/functional/cases"',
       ],
     },
@@ -211,8 +211,8 @@ local cron_prepromo_splice(arch) = {
   multiarch_pipeline,
   prepromotion_test('amd64'),
   prepromotion_test('arm64'),
-  prepromotion_test('amd64', cron_promo_get_image_name) + cron_prepromo_splice('amd64'),
-  prepromotion_test('arm64', cron_promo_get_image_name) + cron_prepromo_splice('arm64'),
+  prepromotion_test('amd64', cron_promo_get_image_name, 'master') + cron_prepromo_splice('amd64'),
+  prepromotion_test('arm64', cron_promo_get_image_name, 'master') + cron_prepromo_splice('arm64'),
   promotion_multiarch('promotion_multiarch', 'promote_multiarch', ''),
   promotion_multiarch('promotion_multiarch_asan', 'promote_multiarch_asan', 'asan-'),
   cron_promotion(''),
