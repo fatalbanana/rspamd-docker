@@ -113,7 +113,7 @@ local cron_promo_get_image_name(rspamd_image, arch) =
   std.format('%s:nightly-%s', [rspamd_image, arch]);
 
 local prepromotion_test(arch, get_image_name=promo_get_image_name) = {
-  name: 'prepromo' + arch,
+  name: 'prepromo_' + arch,
   platform: {
     os: 'linux',
     arch: arch,
