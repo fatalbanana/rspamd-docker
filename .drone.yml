@@ -216,7 +216,7 @@
          "settings": {
             "build_args": [
                "RSPAMD_GIT=master",
-               "RSPAMD_VERSION=${DRONE_BUILD_CREATED}",
+               "RSPAMD_VERSION=auto",
                "TARGETARCH=amd64"
             ],
             "dockerfile": "Dockerfile.pkg",
@@ -317,7 +317,7 @@
          "settings": {
             "build_args": [
                "RSPAMD_GIT=master",
-               "RSPAMD_VERSION=${DRONE_BUILD_CREATED}",
+               "RSPAMD_VERSION=auto",
                "TARGETARCH=arm64"
             ],
             "dockerfile": "Dockerfile.pkg",
