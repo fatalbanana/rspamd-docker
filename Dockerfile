@@ -2,7 +2,7 @@ ARG DEBIAN_RELEASE=bookworm
 ARG PKG_TAG
 ARG TARGETARCH
 
-FROM rspamd/rspamd:${PKG_TAG} AS pkg
+FROM nerfd/rspamd:${PKG_TAG} AS pkg
 
 FROM scratch AS lid
 COPY lid.176.ftz /
