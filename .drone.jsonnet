@@ -178,14 +178,14 @@ local cron_preflight = {
       image: rspamd_image + ':nightly',
       pull: 'always',
       commands: [
-        "dpkg-query -W -f='$${Version}' rspamd > /state/.DOCKER_VERSION",
+        "dpkg-query -W -f='$${Version}' rspamd > /state/DOCKER_VERSION",
       ],
     } + preflight_state_volume,
     {
       name: 'compare_git_version',
       image: 'bitnami/git',
       commands: [
-        'bash -c "export GIT_VERSION=`git ls-remote -q https://github.com/rspamd/rspamd.git refs/heads/master` && export GIT_VERSION=$$((16#$${GIT_VERSION:0:9})) && export DOCKER_VERSION=`cat /state/.DOCKER_VERSION` && if [ "$$GIT_VERSION" = "$$DOCKER_VERSION" ]; then echo no update needed; exit 1; else echo $${DOCKER_VERSION} != $${GIT_VERSION}; fi',
+        'bash -c "export GIT_VERSION=`git ls-remote -q https://github.com/rspamd/rspamd.git refs/heads/master` && export GIT_VERSION=$$((16#$${GIT_VERSION:0:9})) && export DOCKER_VERSION=`cat /state/DOCKER_VERSION` && if [ "$$GIT_VERSION" = "$$DOCKER_VERSION" ]; then echo no update needed; exit 1; else echo $${DOCKER_VERSION} != $${GIT_VERSION}; fi',
       ],
     } + preflight_state_volume,
   ],
