@@ -1,6 +1,36 @@
 ---
 {
    "kind": "pipeline",
+   "name": "cron_preflight",
+   "steps": [
+      {
+         "commands": [
+            "dpkg-query -W -f='${Version}' rspamd > .DOCKER_VERSION"
+         ],
+         "image": "nerfd/rspamd:nightly",
+         "name": "get_nightly_version",
+         "pull": "always"
+      },
+      {
+         "commands": [
+            "bash -c \"export GIT_VERSION=`git ls-remote -q https://github.com/rspamd/rspamd.git refs/heads/master` && export GIT_VERSION=$((16#${GIT_VERSION:0:9})) && export DOCKER_VERSION=`cat .DOCKER_VERSION` && if [ \"$GIT_VERSION\" = \"$DOCKER_VERSION\" ]; then echo no update needed; exit 1; else echo ${DOCKER_VERSION} != ${GIT_VERSION}; fi"
+         ],
+         "image": "bitnami/git",
+         "name": "compare_git_version"
+      }
+   ],
+   "trigger": {
+      "event": {
+         "include": [
+            "cron"
+         ]
+      }
+   },
+   "type": "docker"
+}
+---
+{
+   "kind": "pipeline",
    "name": "rspamd_amd64",
    "platform": {
       "arch": "amd64",
@@ -202,6 +232,9 @@
 }
 ---
 {
+   "depends_on": [
+      "cron_preflight"
+   ],
    "kind": "pipeline",
    "name": "cron_rspamd_amd64",
    "platform": {
@@ -303,6 +336,9 @@
 }
 ---
 {
+   "depends_on": [
+      "cron_preflight"
+   ],
    "kind": "pipeline",
    "name": "cron_rspamd_arm64",
    "platform": {

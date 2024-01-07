@@ -162,6 +162,27 @@ local promotion_multiarch(name, step_name, asan_tag) = {
   ],
 } + trigger_on('promote') + pipeline_defaults;
 
+local cron_preflight = {
+  name: 'cron_preflight',
+  steps: [
+    {
+      name: 'get_nightly_version',
+      image: rspamd_image + ':nightly',
+      pull: 'always',
+      commands: [
+        'dpkg-query -W -f=\'${Version}\' rspamd > .DOCKER_VERSION',
+      ],
+    },
+    {
+      name: 'compare_git_version',
+      image: 'bitnami/git',
+      commands: [
+        'bash -c "export GIT_VERSION=`git ls-remote -q https://github.com/rspamd/rspamd.git refs/heads/master` && export GIT_VERSION=$((16#${GIT_VERSION:0:9})) && export DOCKER_VERSION=`cat .DOCKER_VERSION` && if [ "$GIT_VERSION" = "$DOCKER_VERSION" ]; then echo no update needed; exit 1; else echo ${DOCKER_VERSION} != ${GIT_VERSION}; fi',
+      ],
+    }
+  ],
+} + trigger_on('cron') + pipeline_defaults;
+
 local cron_promotion(asan_tag) = {
   depends_on: [
     'cron_prepromo_amd64',
@@ -194,6 +215,9 @@ local cron_pkg_tags(arch) = [
 
 local cron_archspecific_splice(arch) = {
   name: 'cron_rspamd_' + arch,
+  depends_on: [
+    'cron_preflight',
+  ],
 } + trigger_on('cron');
 
 local cron_prepromo_splice(arch) = {
@@ -204,6 +228,7 @@ local cron_prepromo_splice(arch) = {
 } + trigger_on('cron');
 
 [
+  cron_preflight,
   architecture_specific_pipeline('amd64'),
   architecture_specific_pipeline('arm64'),
   architecture_specific_pipeline('amd64', cron_image_tags, cron_pkg_tags, 'master', 'auto') + cron_archspecific_splice('amd64'),
