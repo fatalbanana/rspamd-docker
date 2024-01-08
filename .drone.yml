@@ -10,6 +10,7 @@
          "image": "nerfd/rspamd:nightly",
          "name": "get_nightly_version",
          "pull": "always",
+         "user": "root",
          "volumes": [
             {
                "name": "state",

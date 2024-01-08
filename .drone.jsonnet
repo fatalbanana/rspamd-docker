@@ -177,6 +177,7 @@ local cron_preflight = {
       name: 'get_nightly_version',
       image: rspamd_image + ':nightly',
       pull: 'always',
+      user: 'root',
       commands: [
         "dpkg-query -W -f='$${Version}' rspamd > /state/DOCKER_VERSION",
       ],
