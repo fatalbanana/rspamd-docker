@@ -27,6 +27,7 @@ RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb \
 RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb \
 	dpkg -i /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb /deb/rspamd${ASAN_TAG}-dbg_*_${TARGETARCH}.deb \
 	&& rm -rf /var/log/dpkg.log \
+	&& passwd --expire _rspamd \
 	&& bash -c "find / -mount -newer /proc/1 -not -path '/dev/**' -not -path '/proc/**' -not -path '/sys/**' | xargs touch -h -d '2000-01-01 00:00:00'"
 
 RUN	--mount=type=cache,from=lid,source=/,target=/lid \
