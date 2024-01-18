@@ -57,31 +57,6 @@
    },
    "steps": [
       {
-         "image": "rspamd/drone-docker-plugin",
-         "name": "pkg_amd64",
-         "privileged": true,
-         "settings": {
-            "build_args": [
-               "RSPAMD_GIT=${DRONE_SEMVER_SHORT}",
-               "RSPAMD_VERSION=${DRONE_SEMVER_SHORT}",
-               "TARGETARCH=amd64"
-            ],
-            "dockerfile": "Dockerfile.pkg",
-            "password": {
-               "from_secret": "docker_password"
-            },
-            "platform": "linux/amd64",
-            "repo": "nerfd/rspamd",
-            "tags": [
-               "pkg-amd64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
-            ],
-            "target": "pkg",
-            "username": {
-               "from_secret": "docker_username"
-            }
-         }
-      },
-      {
          "depends_on": [
             "pkg_amd64"
          ],
@@ -157,31 +132,6 @@
       "os": "linux"
    },
    "steps": [
-      {
-         "image": "rspamd/drone-docker-plugin",
-         "name": "pkg_arm64",
-         "privileged": true,
-         "settings": {
-            "build_args": [
-               "RSPAMD_GIT=${DRONE_SEMVER_SHORT}",
-               "RSPAMD_VERSION=${DRONE_SEMVER_SHORT}",
-               "TARGETARCH=arm64"
-            ],
-            "dockerfile": "Dockerfile.pkg",
-            "password": {
-               "from_secret": "docker_password"
-            },
-            "platform": "linux/arm64",
-            "repo": "nerfd/rspamd",
-            "tags": [
-               "pkg-arm64-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}"
-            ],
-            "target": "pkg",
-            "username": {
-               "from_secret": "docker_username"
-            }
-         }
-      },
       {
          "depends_on": [
             "pkg_arm64"
@@ -262,31 +212,6 @@
    },
    "steps": [
       {
-         "image": "rspamd/drone-docker-plugin",
-         "name": "pkg_amd64",
-         "privileged": true,
-         "settings": {
-            "build_args": [
-               "RSPAMD_GIT=master",
-               "RSPAMD_VERSION=auto",
-               "TARGETARCH=amd64"
-            ],
-            "dockerfile": "Dockerfile.pkg",
-            "password": {
-               "from_secret": "docker_password"
-            },
-            "platform": "linux/amd64",
-            "repo": "nerfd/rspamd",
-            "tags": [
-               "pkg-amd64-nightly"
-            ],
-            "target": "pkg",
-            "username": {
-               "from_secret": "docker_username"
-            }
-         }
-      },
-      {
          "depends_on": [
             "pkg_amd64"
          ],
@@ -365,31 +290,6 @@
       "os": "linux"
    },
    "steps": [
-      {
-         "image": "rspamd/drone-docker-plugin",
-         "name": "pkg_arm64",
-         "privileged": true,
-         "settings": {
-            "build_args": [
-               "RSPAMD_GIT=master",
-               "RSPAMD_VERSION=auto",
-               "TARGETARCH=arm64"
-            ],
-            "dockerfile": "Dockerfile.pkg",
-            "password": {
-               "from_secret": "docker_password"
-            },
-            "platform": "linux/arm64",
-            "repo": "nerfd/rspamd",
-            "tags": [
-               "pkg-arm64-nightly"
-            ],
-            "target": "pkg",
-            "username": {
-               "from_secret": "docker_username"
-            }
-         }
-      },
       {
          "depends_on": [
             "pkg_arm64"
