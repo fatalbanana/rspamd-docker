@@ -57,6 +57,9 @@
    },
    "steps": [
       {
+         "depends_on": [
+            "pkg_amd64"
+         ],
          "image": "rspamd/drone-docker-plugin",
          "name": "install_amd64",
          "privileged": true,
@@ -82,6 +85,9 @@
          }
       },
       {
+         "depends_on": [
+            "pkg_amd64"
+         ],
          "image": "rspamd/drone-docker-plugin",
          "name": "install_asan_amd64",
          "privileged": true,
@@ -127,6 +133,9 @@
    },
    "steps": [
       {
+         "depends_on": [
+            "pkg_arm64"
+         ],
          "image": "rspamd/drone-docker-plugin",
          "name": "install_arm64",
          "privileged": true,
@@ -152,6 +161,9 @@
          }
       },
       {
+         "depends_on": [
+            "pkg_arm64"
+         ],
          "image": "rspamd/drone-docker-plugin",
          "name": "install_asan_arm64",
          "privileged": true,
@@ -200,6 +212,9 @@
    },
    "steps": [
       {
+         "depends_on": [
+            "pkg_amd64"
+         ],
          "image": "rspamd/drone-docker-plugin",
          "name": "install_amd64",
          "privileged": true,
@@ -225,6 +240,9 @@
          }
       },
       {
+         "depends_on": [
+            "pkg_amd64"
+         ],
          "image": "rspamd/drone-docker-plugin",
          "name": "install_asan_amd64",
          "privileged": true,
@@ -273,6 +291,9 @@
    },
    "steps": [
       {
+         "depends_on": [
+            "pkg_arm64"
+         ],
          "image": "rspamd/drone-docker-plugin",
          "name": "install_arm64",
          "privileged": true,
@@ -298,6 +319,9 @@
          }
       },
       {
+         "depends_on": [
+            "pkg_arm64"
+         ],
          "image": "rspamd/drone-docker-plugin",
          "name": "install_asan_arm64",
          "privileged": true,

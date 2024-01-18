@@ -39,9 +39,9 @@ local architecture_specific_pipeline(arch, get_image_tags=image_tags, get_pkg_ta
   },
   local install_step(name, asan_tag) = {
     name: name,
-#    depends_on: [
-#      'pkg_' + arch,
-#    ],
+    depends_on: [
+      'pkg_' + arch,
+    ],
     image: 'rspamd/drone-docker-plugin',
     privileged: true,
     settings: {
