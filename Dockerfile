@@ -16,7 +16,7 @@ ENV TARGETARCH=$TARGETARCH
 
 RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb \
 	apt-get update \
-	&& apt-get install -y `bash -c "dpkg -I /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb | grep '^ Depends:' | perl -p -e 's#Depends: |\||\([^)]*\)##g'"` \
+	&& apt-get install -y `bash -c "dpkg -I /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb | grep '^ Depends:' | perl -p -e 's#Depends: |,|\||\([^)]*\)##g'"` \
 	&& apt-get -q clean \
 	&& rm -rf /var/cache/ldconfig/aux-cache /var/lib/apt/lists/* /var/log/apt/* /var/log/dpkg.log \
 	&& bash -c "find / -mount -newer /proc/1 -not -path '/dev/**' -not -path '/proc/**' -not -path '/sys/**' | xargs touch -h -d '2000-01-01 00:00:00'"
