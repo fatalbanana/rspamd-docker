@@ -19,7 +19,7 @@ USER nobody
 WORKDIR /build
 COPY patches/ /patches/
 
-RUN	git clone -b ${RSPAMD_GIT} https://github.com/rspamd/rspamd.git \
+RUN	git clone -b ${RSPAMD_GIT} https://github.com/fatalbanana/rspamd.git \
 	&& cd rspamd \
 	&& git apply /patches/*.diff \
 	&& bash -c "if [ ${RSPAMD_VERSION} == 'auto' ]; then sed -i s/\(.*\)/\($((16#`git log -n1 --pretty='%h'`))\)/ debian/changelog; else sed -i s/\(.*\)/\(${RSPAMD_VERSION}\)/ debian/changelog; fi" \
