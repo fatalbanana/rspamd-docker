@@ -62,21 +62,21 @@ local architecture_specific_pipeline(arch, get_image_tags=image_tags, get_pkg_ta
     arch: arch,
   },
   steps: [
-#    {
-#      name: 'pkg_' + arch,
-#      image: 'rspamd/drone-docker-plugin',
-#      privileged: true,
-#      settings: {
-#        dockerfile: 'Dockerfile.pkg',
-#        build_args: [
-#          'RSPAMD_GIT=' + rspamd_git,
-#          'RSPAMD_VERSION=' + rspamd_version,
-#          'TARGETARCH=' + arch,
-#        ],
-#        tags: get_pkg_tags(arch),
-#        target: 'pkg',
-#      } + step_default_settings + docker_defaults,
-#    },
+    {
+      name: 'pkg_' + arch,
+      image: 'rspamd/drone-docker-plugin',
+      privileged: true,
+      settings: {
+        dockerfile: 'Dockerfile.pkg',
+        build_args: [
+          'RSPAMD_GIT=' + rspamd_git,
+          'RSPAMD_VERSION=' + rspamd_version,
+          'TARGETARCH=' + arch,
+        ],
+        tags: get_pkg_tags(arch),
+        target: 'pkg',
+      } + step_default_settings + docker_defaults,
+    },
     install_step('install_' + arch, ''),
     install_step('install_asan_' + arch, '-asan'),
   ],
