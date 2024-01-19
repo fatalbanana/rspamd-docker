@@ -21,7 +21,7 @@ RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb \
 	&& rm -rf /var/cache/ldconfig/aux-cache /var/lib/apt/lists/* /var/log/apt/* /var/log/dpkg.log \
 	&& bash -c "find / -mount -newer /proc/1 -not -path '/dev/**' -not -path '/proc/**' -not -path '/sys/**' | xargs touch -h -d '2000-01-01 00:00:00'"
 
-RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb --mount=type=cache,from=lid,source=/,target=/lid
+RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb --mount=type=cache,from=lid,source=/,target=/lid \
 	dpkg -i /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb /deb/rspamd${ASAN_TAG}-dbg_*_${TARGETARCH}.deb \
 	&& rm -rf /var/log/dpkg.log \
 	&& cp /lid/lid.176.ftz /usr/share/rspamd/languages/fasttext_model.ftz \
