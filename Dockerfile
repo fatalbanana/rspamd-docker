@@ -23,14 +23,10 @@ RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb \
 
 RUN	--mount=type=cache,from=pkg,source=/deb,target=/deb \
 	dpkg -i /deb/rspamd${ASAN_TAG}_*_${TARGETARCH}.deb /deb/rspamd${ASAN_TAG}-dbg_*_${TARGETARCH}.deb \
-	&& passwd --expire _rspamd \
 	&& rm -rf /var/log/dpkg.log \
+	&& cp /lid/lid.176.ftz /usr/share/rspamd/languages/fasttext_model.ftz \
+	&& passwd --expire _rspamd && passwd --expire _rspamd \
 	&& bash -c "find / -mount -newer /proc/1 -not -path '/dev/**' -not -path '/proc/**' -not -path '/sys/**' | xargs touch -h -d '2000-01-01 00:00:00'"
-
-RUN	--mount=type=cache,from=lid,source=/,target=/lid \
-	cp /lid/lid.176.ftz /usr/share/rspamd/languages/fasttext_model.ftz \
-	&& bash -c "find /usr/share/rspamd/languages -newer /proc/1 | xargs touch -h -d '2000-01-01 00:00:00'" \
-	&& touch -h -d '2000-01-01 00:00:00' /etc
 
 USER	11333:11333
 
