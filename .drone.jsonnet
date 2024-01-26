@@ -238,7 +238,6 @@ local cron_archspecific_splice(arch) = {
 local cron_prepromo_splice(arch) = {
   name: 'cron_prepromo_' + arch,
   depends_on: [
-    'cron_rspamd_' + arch,
   ],
 } + trigger_on('cron');
 

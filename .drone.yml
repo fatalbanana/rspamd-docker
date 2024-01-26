@@ -1,8 +1,6 @@
 ---
 {
-   "depends_on": [
-      "cron_rspamd_amd64"
-   ],
+   "depends_on": [ ],
    "kind": "pipeline",
    "name": "cron_prepromo_amd64",
    "platform": {
@@ -36,9 +34,7 @@
 }
 ---
 {
-   "depends_on": [
-      "cron_rspamd_arm64"
-   ],
+   "depends_on": [ ],
    "kind": "pipeline",
    "name": "cron_prepromo_arm64",
    "platform": {
