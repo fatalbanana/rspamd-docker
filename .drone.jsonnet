@@ -22,7 +22,7 @@ local trigger_on(what_event) = {
   },
 };
 
-local rspamd_image = 'nerfd/rspamd';
+local rspamd_image = 'rspamd/rspamd';
 
 local image_tags(asan_tag, arch) = [
   std.format('image%s-%s-${DRONE_SEMVER_SHORT}-${DRONE_SEMVER_BUILD}', [asan_tag, arch]),
@@ -243,20 +243,8 @@ local cron_prepromo_splice(arch) = {
 } + trigger_on('cron');
 
 [
-  cron_preflight,
-  architecture_specific_pipeline('amd64'),
-  architecture_specific_pipeline('arm64'),
-  architecture_specific_pipeline('amd64', cron_image_tags, cron_pkg_tags, 'master', 'auto') + cron_archspecific_splice('amd64'),
-  architecture_specific_pipeline('arm64', cron_image_tags, cron_pkg_tags, 'master', 'auto') + cron_archspecific_splice('arm64'),
-  multiarch_pipeline,
-  prepromotion_test('amd64'),
-  prepromotion_test('arm64'),
   prepromotion_test('amd64', cron_promo_get_image_name, 'master') + cron_prepromo_splice('amd64'),
   prepromotion_test('arm64', cron_promo_get_image_name, 'master') + cron_prepromo_splice('arm64'),
-  promotion_multiarch('promotion_multiarch', 'promote_multiarch', ''),
-  promotion_multiarch('promotion_multiarch_asan', 'promote_multiarch_asan', 'asan-'),
-  cron_promotion(''),
-  cron_promotion('asan-'),
   {
     kind: 'signature',
     hmac: '0000000000000000000000000000000000000000000000000000000000000000',
