@@ -45,9 +45,9 @@ jobs:
 
       - name: Try get coredump
         run: |
-          mkdir /coreland
-          chmod 1777 /coreland
-          sysctl kernel.core_pattern=/coreland/%e-%p.core
+          mkdir ${GITHUB_WORKSPACE}/coreland
+          chmod 1777 ${GITHUB_WORKSPACE}/coreland
+          sysctl kernel.core_pattern=${GITHUB_WORKSPACE}/coreland/%e-%p.core
           sysctl kernel.core_uses_pid=1
           sysctl fs.suid_dumpable=2
           ulimit -c unlimited
@@ -67,13 +67,14 @@ jobs:
       - name: WTF
         if: (success() || failure())
         run: |
-          ls -ltra /coreland/
+          ls -ltra coreland/
+          echo "CORE_DIRECTORY=$GITHUB_WORKSPACE/coreland" >> "$GITHUB_ENV"
 
       - name: Upload cores
         if: (success() || failure())
         uses: actions/upload-artifact@v4
         with:
           name: coreland
-          path: /coreland
+          path: ${{ env.CORELAND }}/coreland
           retention-days: 1
 
