@@ -50,7 +50,13 @@ jobs:
             RSPAMD_GIT=${{ env.RSPAMD_GIT }}
             RSPAMD_VERSION={{ env.RSPAMD_VERSION }}
           file: Dockerfile.pkg
-          platforms: linux/arm64
+          platforms: linux/amd64
           #platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/${{ github.repository }}:pkg${{ env.PKG_TAG_SUFFIX }}
+
+      - name: WTF
+        if: (success() || failure())
+        run: |
+          ls -ltra
+          find / -name "*core*"
