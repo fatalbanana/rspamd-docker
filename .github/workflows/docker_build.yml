@@ -43,11 +43,6 @@ jobs:
           echo "RSPAMD_GIT=`echo ${{ github.ref_name }} | sed s/^v// | sed s/+.*//`" >> "$GITHUB_ENV"
           echo "RSPAMD_VERSION=`echo ${{ github.ref_name }} | sed s/^v// | sed s/+.*//`" >> "$GITHUB_ENV"
 
-      - name: Try build
-        run: |
-          docker build --build-arg RSPAMD_GIT=3.8.4 --build-arg RSPAMD_VERSION=3.8.4 --file Dockerfile.pkg
-          docker buildx build --build-arg RSPAMD_GIT=3.8.4 --build-arg RSPAMD_VERSION=3.8.4 --file Dockerfile.pkg
-
       - name: Build pkg image
         uses: docker/build-push-action@v5
         with:
