@@ -22,8 +22,8 @@ jobs:
 #      - name: Set up QEMU
 #        uses: docker/setup-qemu-action@v3
 
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Log in to the Container registry
         run: |
@@ -45,8 +45,8 @@ jobs:
 
       - name: Try build
         run: |
-          docker build --build-arg RSPAMD_GIT=3.8.4 --build-arg RSPAMD_VERSION=3.8.4 --file Dockerfile.pkg .
-#          docker buildx build --build-arg RSPAMD_GIT=3.8.4 --build-arg RSPAMD_VERSION=3.8.4 --file Dockerfile.pkg
+          docker build --build-arg RSPAMD_GIT=3.8.4 --build-arg RSPAMD_VERSION=3.8.4 --file Dockerfile.pkg
+          docker buildx build --build-arg RSPAMD_GIT=3.8.4 --build-arg RSPAMD_VERSION=3.8.4 --file Dockerfile.pkg
 
       - name: Build pkg image
         uses: docker/build-push-action@v5
