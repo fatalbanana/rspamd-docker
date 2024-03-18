@@ -50,19 +50,23 @@ jobs:
           sysctl kernel.core_pattern=${GITHUB_WORKSPACE}/coreland/%e-%p.core
           sysctl kernel.core_uses_pid=1
           sysctl fs.suid_dumpable=2
-          ulimit -c unlimited
 
-      - name: Build pkg image
-        uses: docker/build-push-action@v5
-        with:
-          build-args: |
-            RSPAMD_GIT=${{ env.RSPAMD_GIT }}
-            RSPAMD_VERSION={{ env.RSPAMD_VERSION }}
-          file: Dockerfile.pkg
-          platforms: linux/amd64
-          #platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ghcr.io/${{ github.repository }}:pkg${{ env.PKG_TAG_SUFFIX }}
+      - name: Try build
+        run: |
+          ulimit -c unlimited
+          docker build --build-arg RSPAMD_GIT=3.8.4 --build-arg RSPAMD_VERSION=3.8.4 --file Dockerfile.pkg .
+
+#      - name: Build pkg image
+#        uses: docker/build-push-action@v5
+#        with:
+#          build-args: |
+#            RSPAMD_GIT=${{ env.RSPAMD_GIT }}
+#            RSPAMD_VERSION={{ env.RSPAMD_VERSION }}
+#          file: Dockerfile.pkg
+#          platforms: linux/amd64
+#          #platforms: linux/amd64,linux/arm64
+#          push: true
+#          tags: ghcr.io/${{ github.repository }}:pkg${{ env.PKG_TAG_SUFFIX }}
 
       - name: WTF
         if: (success() || failure())
