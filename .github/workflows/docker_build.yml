@@ -51,8 +51,8 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           build-args: |
-            RSPAMD_GIT=${{ env.RSPAMD_GIT }}
-            RSPAMD_VERSION={{ env.RSPAMD_VERSION }}
+            RSPAMD_GIT=${RSPAMD_GIT}
+            RSPAMD_VERSION={RSPAMD_VERSION}
           file: Dockerfile.pkg
           platforms: linux/amd64,linux/arm64
           push: true
@@ -63,7 +63,7 @@ jobs:
         with:
           build-args: |
             PKG_IMG=ghcr.io/${{ github.repository }}
-            PKG_TAG=pkg${{ env.PKG_TAG_SUFFIX }}
+            PKG_TAG=pkg${PKG_TAG_SUFFIX}
           file: Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
@@ -75,7 +75,7 @@ jobs:
           build-args: |
             ASAN_TAG=-asan
             PKG_IMG=ghcr.io/${{ github.repository }}
-            PKG_TAG=pkg${{ env.PKG_TAG_SUFFIX }}
+            PKG_TAG=pkg${PKG_TAG_SUFFIX}
           file: Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
