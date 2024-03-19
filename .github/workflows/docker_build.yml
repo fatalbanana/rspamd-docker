@@ -11,7 +11,7 @@ on:
 jobs:
   docker_build:
     name: docker_build
-    runs-on: ["ubuntu-latest"]
+    runs-on: ["buildjet-4vcpu-ubuntu-2204"]
     permissions:
       packages: write
       contents: read
