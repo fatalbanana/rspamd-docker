@@ -20,6 +20,8 @@ jobs:
       image: ${{ inputs.image }}
       options: --user root ${{matrix.option}}
     steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
       - name: Run tests
         run: |
           apt-get update
