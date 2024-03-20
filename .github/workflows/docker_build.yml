@@ -98,9 +98,12 @@ jobs:
           push: true
           tags: ${{ env.IMG_TAGS_ASAN }}
 
-      - name: Run tests
-        uses: ./.github/workflows/rspamd_test.yml
-        with:
-          # FIXME: nightly
-          image: ghcr.io/${{ github.repository }}:latest
-          tag: ${{ env.RSPAMD_GIT }}
+  test:
+    needs: [docker_build]
+    name: rspamd_test
+    runs-on: ["ubuntu-latest"]
+    uses: ./.github/workflows/rspamd_test.yml
+    with:
+      # FIXME: nightly
+      image: ghcr.io/${{ github.repository }}:latest
+      tag: ${{ env.RSPAMD_GIT }}
