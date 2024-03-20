@@ -98,6 +98,14 @@ jobs:
           push: true
           tags: ${{ env.IMG_TAGS_ASAN }}
 
+  test:
+    needs: [docker_build]
+    name: rspamd_test
+    runs-on: ["ubuntu-latest"]
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v4
+
       - name: Run tests
         uses: ./.github/workflows/rspamd_test.yml
         with:
