@@ -104,3 +104,4 @@ jobs:
           # FIXME: nightly
           image: ghcr.io/${{ github.repository }}:latest
           tag: ${{ env.RSPAMD_GIT }}
+
