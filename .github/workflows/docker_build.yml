@@ -10,7 +10,6 @@ on:
 
 jobs:
   docker_build:
-    name: docker_build
     runs-on: ["ubuntu-latest"]
     permissions:
       packages: write
@@ -98,6 +97,10 @@ jobs:
           push: true
           tags: ${{ env.IMG_TAGS_ASAN }}
 
+  test:
+    needs: [docker_build]
+    runs-on: ["ubuntu-latest"]
+    steps:
       - name: Run tests
         uses: ./.github/workflows/rspamd_test.yml
         with:
