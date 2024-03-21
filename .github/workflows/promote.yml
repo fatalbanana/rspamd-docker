@@ -18,6 +18,7 @@ on:
 
 jobs:
   promote:
+    runs-on: "ubuntu-latest"
     steps:
       - name: Install Cosign
         uses: sigstore/cosign-installer@v3
