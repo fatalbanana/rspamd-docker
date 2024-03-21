@@ -13,3 +13,12 @@ jobs:
     permissions:
       packages: write
       contents: read
+    secrets: inherit
+
+  test:
+    needs: [release]
+    uses: ./.github/workflows/rspamd_test.yml
+    with:
+      image: ghcr.io/${{ github.repository }}:latest
+      # FIXME: use RSPAMD_GIT as output
+      tag: 3.8.4
