@@ -10,12 +10,12 @@ on:
     outputs:
       tag:
         description: "Corresponding tag in rspamd repo"
-        value: ${{ jobs.docker_build.outputs.run_id }}
+        value: ${{ jobs.docker_build.outputs.tag }}
 
 jobs:
   docker_build:
     outputs:
-      tag: ${{ steps.save_tag.outputs.tag }}
+      tag: ${{ steps.save_output.outputs.tag }}
     runs-on: ["ubuntu-latest"]
     permissions:
       packages: write
@@ -69,8 +69,8 @@ jobs:
           echo "RSPAMD_GIT=`echo ${{ github.ref_name }} | sed s/^v// | sed s/+.*//`" >> "$GITHUB_ENV"
           echo "RSPAMD_VERSION=`echo ${{ github.ref_name }} | sed s/^v// | sed s/+.*//`" >> "$GITHUB_ENV"
 
-      - name: Save tag as output
-        id: save_tag
+      - name: Save output
+        id: save_output
         run: echo "tag=${{ env.RSPAMD_GIT }}" > $GITHUB_OUTPUT
 
       - name: Build pkg image
