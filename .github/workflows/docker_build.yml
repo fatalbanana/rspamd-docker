@@ -7,9 +7,15 @@ on:
         default: true
         required: false
         type: boolean
+    outputs:
+      tag:
+        description: "Corresponding tag in rspamd repo"
+        value: ${{ jobs.docker_build.outputs.run_id }}
 
 jobs:
   docker_build:
+    outputs:
+      tag: ${{ steps.save_tag.outputs.tag }}
     runs-on: ["ubuntu-latest"]
     permissions:
       packages: write
@@ -62,6 +68,10 @@ jobs:
           echo "PKG_TAG_SUFFIX=-`echo ${{ github.ref_name }} | sed s/+/-/ | sed s/^v//`" >> "$GITHUB_ENV"
           echo "RSPAMD_GIT=`echo ${{ github.ref_name }} | sed s/^v// | sed s/+.*//`" >> "$GITHUB_ENV"
           echo "RSPAMD_VERSION=`echo ${{ github.ref_name }} | sed s/^v// | sed s/+.*//`" >> "$GITHUB_ENV"
+
+      - name: Save tag as output
+        id: save_tag
+        run: echo "tag=${{ env.RSPAMD_GIT }}" > $GITHUB_OUTPUT
 
       - name: Build pkg image
         uses: docker/build-push-action@v5
