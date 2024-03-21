@@ -27,6 +27,8 @@ jobs:
           bash -c "source $GITHUB_WORKSPACE/venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: demjson psutil requests robotframework tornado"
           git clone -b ${{ inputs.tag }} https://github.com/rspamd/rspamd.git
           cd rspamd
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
           git cherry-pick f47853130d6dacc227934ec0ee196422a9528ff8
           git cherry-pick 29fb22ad7503ea5792cf92c5f7dffad1cafc9127
           git cherry-pick fa4d299b3eeefd669d8e50f6ebb905fe251743cc
