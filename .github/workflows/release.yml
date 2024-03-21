@@ -9,6 +9,7 @@ jobs:
   build:
     uses: ./.github/workflows/docker_build.yml
     with:
+      dockerhub_name: nerfd/rspamd
       nightly: false
     permissions:
       packages: write
