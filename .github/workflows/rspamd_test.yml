@@ -12,13 +12,10 @@ on:
 
 jobs:
   rspamd_test:
-    strategy:
-      matrix:
-        options: ["--platform arm64", "--platform amd64"]
     runs-on: "ubuntu-latest"
     container:
       image: ${{ inputs.image }}
-      options: --user root ${{matrix.option}}
+      options: --user root
     steps:
       - name: Run tests
         run: |
