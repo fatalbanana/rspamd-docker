@@ -26,4 +26,4 @@ jobs:
           bash -c "source $GITHUB_WORKSPACE/venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: setuptools==57.5.0"
           bash -c "source $GITHUB_WORKSPACE/venv/bin/activate && pip3 install --no-cache --disable-pip-version-check --no-binary :all: demjson psutil requests robotframework tornado"
           git clone -b ${{ inputs.tag }} https://github.com/rspamd/rspamd.git
-          RSPAMD_INSTALLROOT=/usr bash -c "source $GITHUB_WORKSPACE/venv/bin/activate && umask 0000 && robot --removekeywords wuks --exclude isbroken $GITHUB_WORKSPACE/rspamd/test/functional/cases"
+          RSPAMD_INSTALLROOT=/usr bash -c "source $GITHUB_WORKSPACE/venv/bin/activate && robot --removekeywords wuks --exclude isbroken $GITHUB_WORKSPACE/rspamd/test/functional/cases"
