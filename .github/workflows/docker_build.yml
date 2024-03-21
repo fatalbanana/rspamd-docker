@@ -86,9 +86,9 @@ jobs:
       - name: Save output
         id: save_output
         run: |
-          echo "dockerhub_tags_asan=${{ env.IMG_TAGS_DOCKERHUB_ASAN }}" > $GITHUB_OUTPUT
-          echo "dockerhub_tags_release=${{ env.IMG_TAGS_DOCKERHUB_RELEASE }}" > $GITHUB_OUTPUT
-          echo "tag=${{ env.RSPAMD_GIT }}" > $GITHUB_OUTPUT
+          echo "dockerhub_tags_asan=${{ env.IMG_TAGS_DOCKERHUB_ASAN }}" >> $GITHUB_OUTPUT
+          echo "dockerhub_tags_release=${{ env.IMG_TAGS_DOCKERHUB_RELEASE }}" >> $GITHUB_OUTPUT
+          echo "tag=${{ env.RSPAMD_GIT }}" >> $GITHUB_OUTPUT
 
       - name: Build pkg image
         uses: docker/build-push-action@v5
