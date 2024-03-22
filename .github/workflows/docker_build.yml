@@ -58,8 +58,10 @@ jobs:
       - name: Set nightly-specific variables
         if: ${{ inputs.nightly }}
         run: |
-          echo "IMG_TAGS_ASAN=ghcr.io/${{ github.repository }}:asan-nightly" >> "$GITHUB_ENV"
-          echo "IMG_TAGS_RELEASE=ghcr.io/${{ github.repository }}:nightly" >> "$GITHUB_ENV"
+          echo "IMG_TAGS_GHCR_ASAN=ghcr.io/${{ github.repository }}:asan-nightly" >> "$GITHUB_ENV"
+          echo "IMG_TAGS_GHCR_RELEASE=ghcr.io/${{ github.repository }}:nightly" >> "$GITHUB_ENV"
+          echo "IMG_TAGS_DOCKERHUB_ASAN=${{ inputs.dockerhub_name }}:asan-nightly" >> "$GITHUB_ENV"
+          echo "IMG_TAGS_DOCKERHUB_RELEASE=${{ inputs.dockerhub_name }}:nightly" >> "$GITHUB_ENV"
           echo "PKG_TAG_SUFFIX=-nightly" >> "$GITHUB_ENV"
           echo "RSPAMD_GIT=master" >> "$GITHUB_ENV"
           echo "RSPAMD_VERSION=auto" >> "$GITHUB_ENV"
