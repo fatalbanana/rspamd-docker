@@ -26,7 +26,7 @@ jobs:
       - name: Log in to Dockerhub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: nerfd
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Log in to GHCR
