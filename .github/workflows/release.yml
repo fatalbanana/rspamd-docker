@@ -12,6 +12,7 @@ jobs:
       dockerhub_name: nerfd/rspamd
       nightly: false
     permissions:
+      id-token: write
       packages: write
       contents: read
     secrets: inherit
