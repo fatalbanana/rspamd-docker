@@ -39,7 +39,7 @@ jobs:
           IFS=, read -a tags <<< "${{ inputs.dockerhub_tags_release }}"
           for tag in ${tags[@]}
           do
-            docker image tag ${{ inputs.image }} ${tag}
+            docker buildx imagetools create -t ${tag} ${{ inputs.image }}
             docker push ${tag}
           done
 
@@ -49,6 +49,6 @@ jobs:
           IFS=, read -a tags <<< "${{ inputs.dockerhub_tags_asan }}"
           for tag in ${tags[@]}
           do
-            docker image tag ${{ inputs.image_asan }} ${tag}
+            docker buildx imagetools create -t ${tag} ${{ inputs.image_asan }}
             docker push ${tag}
           done
