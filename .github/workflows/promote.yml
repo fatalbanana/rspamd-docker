@@ -35,6 +35,7 @@ jobs:
 
       - name: Push image
         run: |
+          docker pull ${{ inputs.image }}
           IFS=, read -a tags <<< "${{ inputs.dockerhub_tags_release }}"
           for tag in ${tags[@]}
           do
@@ -44,6 +45,7 @@ jobs:
 
       - name: Push ASAN image
         run: |
+          docker pull ${{ inputs.image_asan }}
           IFS=, read -a tags <<< "${{ inputs.dockerhub_tags_asan }}"
           for tag in ${tags[@]}
           do
