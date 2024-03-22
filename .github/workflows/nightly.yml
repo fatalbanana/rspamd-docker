@@ -12,6 +12,7 @@ jobs:
     permissions:
       packages: write
       contents: read
+    secrets: inherit
 
   test:
     needs: [build]
