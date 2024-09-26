@@ -21,13 +21,3 @@ jobs:
     with:
       image: ghcr.io/${{ github.repository }}:latest
       tag: "${{ needs.build.outputs.tag }}"
-
-  promote:
-    needs: [build, test]
-    uses: ./.github/workflows/promote.yml
-    with:
-      image: ghcr.io/${{ github.repository }}:latest
-      image_asan: ghcr.io/${{ github.repository }}:asan-latest
-      dockerhub_tags_asan: "${{ needs.build.outputs.dockerhub_tags_asan }}"
-      dockerhub_tags_release: "${{ needs.build.outputs.dockerhub_tags_release }}"
-    secrets: inherit
