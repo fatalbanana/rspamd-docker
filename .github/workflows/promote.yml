@@ -36,20 +36,24 @@ jobs:
       - name: Push release image to GHCR
         run: |
           IFS=, read -a tags <<< "${{ inputs.ghcr_tags_release }}"
+          IMAGES="${{ inputs.images }}"
+          IMAGES="${IMAGES//,/ }"
           for tag in ${tags[@]}
           do
             TAGLIST+=" -t ${tag} "
           done
-          docker buildx imagetools create ${TAGLIST} ${{ inputs.images.replace(',', ' ') }}
+          docker buildx imagetools create ${TAGLIST} ${IMAGES}
 
       - name: Push ASAN image to GHCR
         run: |
           IFS=, read -a tags <<< "${{ inputs.ghcr_tags_asan }}"
+          IMAGES="${{ inputs.images }}"
+          IMAGES="${IMAGES//,/ }"
           for tag in ${tags[@]}
           do
             TAGLIST+=" -t ${tag} "
           done
-          docker buildx imagetools create ${TAGLIST} ${{ inputs.images_asan.replace(',', ' ') }}
+          docker buildx imagetools create ${TAGLIST} ${IMAGES}
 
       - name: Log in to Dockerhub
         uses: docker/login-action@v3
@@ -60,17 +64,21 @@ jobs:
       - name: Push release image to Dockerhub
         run: |
           IFS=, read -a tags <<< "${{ inputs.dockerhub_tags_release }}"
+          IMAGES="${{ inputs.images }}"
+          IMAGES="${IMAGES//,/ }"
           for tag in ${tags[@]}
           do
             TAGLIST+=" -t ${tag} "
           done
-          docker buildx imagetools create ${TAGLIST} ${{ inputs.images.replace(',', ' ') }}
+          docker buildx imagetools create ${TAGLIST} ${IMAGES}
 
       - name: Push ASAN image to Dockerhub
         run: |
           IFS=, read -a tags <<< "${{ inputs.dockerhub_tags_asan }}"
+          IMAGES="${{ inputs.images }}"
+          IMAGES="${IMAGES//,/ }"
           for tag in ${tags[@]}
           do
             TAGLIST+=" -t ${tag} "
           done
-          docker buildx imagetools create ${TAGLIST} ${{ inputs.images_asan.replace(',', ' ') }}
+          docker buildx imagetools create ${TAGLIST} ${IMAGES}
