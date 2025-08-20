@@ -5,6 +5,10 @@ on:
     - cron: "0 0 * * *"
   workflow_dispatch:
 
+concurrency:
+  group: rspamd-docker-nightly
+  cancel-in-progress: false
+
 jobs:
   build_test_promote:
     uses: ./.github/workflows/build_test_promote.yml
