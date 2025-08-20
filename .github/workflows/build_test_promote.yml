@@ -91,7 +91,7 @@ jobs:
           echo "ghcr_tags_release=${{ env.IMG_TAGS_GHCR_RELEASE }}" >> $GITHUB_OUTPUT
 
   promote:
-    needs: [get_tags, test_amd64, test_arm64]
+    needs: [build_amd64, build_arm64, get_tags, test_amd64, test_arm64]
     uses: ./.github/workflows/promote.yml
     with:
       images: ghcr.io/${{ github.repository }}@${{ needs.build_amd64.outputs.digest_release }},ghcr.io/${{ github.repository }}@${{ needs.build_arm64.outputs.digest_release }}
