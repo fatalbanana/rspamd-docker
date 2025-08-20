@@ -33,7 +33,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push image (ghcr)
+      - name: Push release image to GHCR
         run: |
           IFS=, read -a tags <<< "${{ inputs.ghcr_tags_release }}"
           for tag in ${tags[@]}
@@ -42,7 +42,7 @@ jobs:
           done
           docker buildx imagetools create ${TAGLIST} ${{ inputs.images.replace(',', ' ') }}
 
-      - name: Push ASAN image (ghcr)
+      - name: Push ASAN image to GHCR
         run: |
           IFS=, read -a tags <<< "${{ inputs.ghcr_tags_asan }}"
           for tag in ${tags[@]}
@@ -57,7 +57,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Push image (dockerhub)
+      - name: Push release image to Dockerhub
         run: |
           IFS=, read -a tags <<< "${{ inputs.dockerhub_tags_release }}"
           for tag in ${tags[@]}
@@ -66,7 +66,7 @@ jobs:
           done
           docker buildx imagetools create ${TAGLIST} ${{ inputs.images.replace(',', ' ') }}
 
-      - name: Push ASAN image (dockerhub)
+      - name: Push ASAN image to Dockerhub
         run: |
           IFS=, read -a tags <<< "${{ inputs.dockerhub_tags_asan }}"
           for tag in ${tags[@]}
