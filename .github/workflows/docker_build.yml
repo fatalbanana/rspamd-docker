@@ -39,7 +39,6 @@ on:
 
 jobs:
   docker_build:
-    id: docker_build
     outputs:
       digest_asan: "${{ steps.build_asan.outputs.digest }}"
       digest_release: "${{ steps.build_release.outputs.digest }}"
