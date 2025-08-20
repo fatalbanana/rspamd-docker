@@ -3,10 +3,6 @@ name: Publish Docker image
 on:
   workflow_call:
     inputs:
-      dockerhub_name:
-        default: fatalbanana/rspamd
-        required: false
-        type: string
       nightly:
         default: true
         required: false
