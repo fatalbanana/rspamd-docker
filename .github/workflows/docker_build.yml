@@ -21,18 +21,6 @@ on:
       digest_release:
         description: "Digest of the release image"
         value: ${{ jobs.docker_build.outputs.digest_release }}
-      dockerhub_tags_asan:
-        description: "Tags to set in Dockerhub (ASAN)"
-        value: ${{ jobs.docker_build.outputs.dockerhub_tags_asan }}
-      dockerhub_tags_release:
-        description: "Tags to set in Dockerhub (release)"
-        value: ${{ jobs.docker_build.outputs.dockerhub_tags_release }}
-      ghcr_tags_asan:
-        description: "Tags to set in GHCR (ASAN)"
-        value: ${{ jobs.docker_build.outputs.ghcr_tags_asan }}
-      ghcr_tags_release:
-        description: "Tags to set in GHCR (release)"
-        value: ${{ jobs.docker_build.outputs.ghcr_tags_release }}
       tag:
         description: "Tag in rspamd repo to check out for tests"
         value: ${{ jobs.docker_build.outputs.tag }}
@@ -42,10 +30,6 @@ jobs:
     outputs:
       digest_asan: "${{ steps.build_asan.outputs.digest }}"
       digest_release: "${{ steps.build_release.outputs.digest }}"
-      dockerhub_tags_asan: ${{ steps.save_output.outputs.dockerhub_tags_asan }}
-      dockerhub_tags_release: ${{ steps.save_output.outputs.dockerhub_tags_release }}
-      ghcr_tags_asan: ${{ steps.save_output.outputs.ghcr_tags_asan }}
-      ghcr_tags_release: ${{ steps.save_output.outputs.ghcr_tags_release }}
       tag: ${{ steps.save_output.outputs.tag }}
     runs-on: "${{ (github.event.inputs.platform == 'arm64') && 'ubuntu-22.04-arm' || 'ubuntu-22.04' }}"
     permissions:
@@ -68,10 +52,6 @@ jobs:
       - name: Set nightly-specific variables
         if: ${{ inputs.nightly }}
         run: |
-          echo "IMG_TAGS_GHCR_ASAN=ghcr.io/${{ github.repository }}:asan-nightly" >> "$GITHUB_ENV"
-          echo "IMG_TAGS_GHCR_RELEASE=ghcr.io/${{ github.repository }}:nightly" >> "$GITHUB_ENV"
-          echo "IMG_TAGS_DOCKERHUB_ASAN=${{ inputs.dockerhub_name }}:asan-nightly" >> "$GITHUB_ENV"
-          echo "IMG_TAGS_DOCKERHUB_RELEASE=${{ inputs.dockerhub_name }}:nightly" >> "$GITHUB_ENV"
           echo "PKG_TAG_SUFFIX=-nightly" >> "$GITHUB_ENV"
           echo "RSPAMD_GIT=master" >> "$GITHUB_ENV"
           echo "RSPAMD_VERSION=auto" >> "$GITHUB_ENV"
@@ -87,10 +67,6 @@ jobs:
           echo "VERSION_MAJOR_MINOR=${VERSION_MAJOR_MINOR}" >> "$GITHUB_ENV"
           export VERSION_MAJOR=`echo ${{ github.ref_name }} | sed s/^v// | sed 's/[^0-9].*//'`
           echo "VERSION_MAJOR=${VERSION_MAJOR}" >> "$GITHUB_ENV"
-          echo "IMG_TAGS_DOCKERHUB_ASAN=${{ inputs.dockerhub_name }}:asan-latest,${{ inputs.dockerhub_name }}:asan-${VERSION_BUILD},${{ inputs.dockerhub_name }}:asan-${VERSION_FULL},${{ inputs.dockerhub_name }}:asan-${VERSION_MAJOR_MINOR},${{ inputs.dockerhub_name }}:asan-${VERSION_MAJOR}" >> "$GITHUB_ENV"
-          echo "IMG_TAGS_GHCR_ASAN=ghcr.io/${{ github.repository }}:asan-latest,ghcr.io/${{ github.repository }}:asan-${VERSION_BUILD},ghcr.io/${{ github.repository }}:asan-${VERSION_FULL},ghcr.io/${{ github.repository }}:asan-${VERSION_MAJOR_MINOR},ghcr.io/${{ github.repository }}:asan-${VERSION_MAJOR}" >> "$GITHUB_ENV"
-          echo "IMG_TAGS_DOCKERHUB_RELEASE=${{ inputs.dockerhub_name }}:latest,${{ inputs.dockerhub_name }}:${VERSION_BUILD},${{ inputs.dockerhub_name }}:${VERSION_FULL},${{ inputs.dockerhub_name }}:${VERSION_MAJOR_MINOR},${{ inputs.dockerhub_name }}:${VERSION_MAJOR}" >> "$GITHUB_ENV"
-          echo "IMG_TAGS_GHCR_RELEASE=ghcr.io/${{ github.repository }}:latest,ghcr.io/${{ github.repository }}:${VERSION_BUILD},ghcr.io/${{ github.repository }}:${VERSION_FULL},ghcr.io/${{ github.repository }}:${VERSION_MAJOR_MINOR},ghcr.io/${{ github.repository }}:${VERSION_MAJOR}" >> "$GITHUB_ENV"
           echo "PKG_TAG_SUFFIX=-`echo ${{ github.ref_name }} | sed s/+/-/ | sed s/^v//`" >> "$GITHUB_ENV"
           echo "RSPAMD_GIT=`echo ${{ github.ref_name }} | sed s/^v// | sed s/+.*//`" >> "$GITHUB_ENV"
           echo "RSPAMD_VERSION=`echo ${{ github.ref_name }} | sed s/^v// | sed s/+.*//`" >> "$GITHUB_ENV"
@@ -98,10 +74,6 @@ jobs:
       - name: Save output
         id: save_output
         run: |
-          echo "dockerhub_tags_asan=${{ env.IMG_TAGS_DOCKERHUB_ASAN }}" >> $GITHUB_OUTPUT
-          echo "dockerhub_tags_release=${{ env.IMG_TAGS_DOCKERHUB_RELEASE }}" >> $GITHUB_OUTPUT
-          echo "ghcr_tags_asan=${{ env.IMG_TAGS_GHCR_ASAN }}" >> $GITHUB_OUTPUT
-          echo "ghcr_tags_release=${{ env.IMG_TAGS_GHCR_RELEASE }}" >> $GITHUB_OUTPUT
           echo "tag=${{ env.RSPAMD_GIT }}" >> $GITHUB_OUTPUT
 
       - name: Build pkg image
