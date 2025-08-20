@@ -47,7 +47,7 @@ jobs:
       - name: Push ASAN image to GHCR
         run: |
           IFS=, read -a tags <<< "${{ inputs.ghcr_tags_asan }}"
-          IMAGES="${{ inputs.images }}"
+          IMAGES="${{ inputs.images_asan }}"
           IMAGES="${IMAGES//,/ }"
           for tag in ${tags[@]}
           do
@@ -75,7 +75,7 @@ jobs:
       - name: Push ASAN image to Dockerhub
         run: |
           IFS=, read -a tags <<< "${{ inputs.dockerhub_tags_asan }}"
-          IMAGES="${{ inputs.images }}"
+          IMAGES="${{ inputs.images_asan }}"
           IMAGES="${IMAGES//,/ }"
           for tag in ${tags[@]}
           do
