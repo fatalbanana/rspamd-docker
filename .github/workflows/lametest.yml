@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Check out source code
         uses: actions/checkout@v4
+        with:
+          fetch-tags: true
 
       - name: Bump tag for no particular reason
         uses: ./.github/actions/bump_tag
