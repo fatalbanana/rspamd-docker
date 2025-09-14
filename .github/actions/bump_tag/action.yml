@@ -5,6 +5,8 @@ runs:
   steps:
     - name: Create new patch release
       shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         cd $GITHUB_WORKSPACE
         git config --global user.name "github-actions[bot]"
