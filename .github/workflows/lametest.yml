@@ -1,0 +1,13 @@
+name: lametest
+
+on:
+  workflow_dispatch:
+
+jobs:
+  bump:
+    runs-on: "ubuntu-22.04"
+    steps:
+      - name: Bump tag for no particular reason
+        uses: ./.github/actions/bump_tag
+        permissions:
+          contents: write
