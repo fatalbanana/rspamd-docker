@@ -18,3 +18,4 @@ runs:
         echo "New tag: $NEW_TAG"
         git tag $NEW_TAG $LATEST_TAG
         git push origin $NEW_TAG
+        gh workflow run release --ref $NEW_TAG
