@@ -7,6 +7,9 @@ on:
 
 jobs:
   autosecurity:
+    permissions:
+      actions: write
+      contents: write
     runs-on: "ubuntu-22.04"
     steps:
       - name: Check out source code
@@ -30,9 +33,6 @@ jobs:
       - name: Push new tag if base image checked clean
         if: ${{ env.RELEASE_VULN_COUNT != 0 && env.BASE_VULN_COUNT == 0 }}
         uses: ./.github/actions/bump_tag
-        permissions:
-          actions: write
-          contents: write
 
       - name: Check if base image is relatively better
         if: ${{ env.RELEASE_VULN_COUNT != 0 && env.BASE_VULN_COUNT != 0 }}
@@ -54,6 +54,3 @@ jobs:
       - name: Push new tag if base image is better
         if: ${{ env.BUMP_TAG == 1 }}
         uses: ./.github/actions/bump_tag
-        permissions:
-          actions: write
-          contents: write
