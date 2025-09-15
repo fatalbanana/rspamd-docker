@@ -80,7 +80,7 @@ jobs:
             RSPAMD_VERSION=${{ env.RSPAMD_VERSION }}
           file: Dockerfile.pkg
           push: true
-          tags: ghcr.io/${{ github.repository }}:pkg${{ env.PKG_TAG_SUFFIX }}
+          tags: ghcr.io/${{ github.repository }}:pkg${{ env.PKG_TAG_SUFFIX }},ghcr.io/${{ github.repository }}:pkg-latest
 
       - name: Build release image
         id: build_release
