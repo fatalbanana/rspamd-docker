@@ -54,6 +54,8 @@ jobs:
       dockerhub_tags_release: ${{ steps.save_output.outputs.dockerhub_tags_release }}
       ghcr_tags_asan: ${{ steps.save_output.outputs.ghcr_tags_asan }}
       ghcr_tags_release: ${{ steps.save_output.outputs.ghcr_tags_release }}
+      ghcr_tags_package: ${{ steps.save_output.outputs.ghcr_tags_package }}
+      dockerhub_tags_package: ${{ steps.save_output.outputs.dockerhub_tags_package }}
     runs-on: "ubuntu-22.04"
     steps:
       - name: Set nightly-specific variables
