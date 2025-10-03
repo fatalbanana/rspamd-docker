@@ -16,6 +16,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          path: rspamd-docker
 
       - name: Download grype
         uses: anchore/scan-action/download-grype@v4
@@ -57,6 +58,7 @@ jobs:
       - name: Push new tag if test image checked clean
         if: ${{ env.RELEASE_VULN_COUNT != '0' && env.TEST_VULN_COUNT == '0' }}
         uses: ./.github/actions/bump_tag
+        working-directory: ${GITHUB_WORKSPACE}/rspamd-docker
 
       - name: Check if test image is relatively better
         if: ${{ env.RELEASE_VULN_COUNT != '0' && env.TEST_VULN_COUNT != '0' }}
@@ -78,3 +80,4 @@ jobs:
       - name: Push new tag if test image is better
         if: ${{ env.BUMP_TAG == '1' }}
         uses: ./.github/actions/bump_tag
+        working-directory: ${GITHUB_WORKSPACE}/rspamd-docker
