@@ -5,7 +5,7 @@ runs:
   steps:
     - name: Create new patch release
       shell: bash
-      working-directory: ${{ github.workspace }}/rspamd-docker
+      working-directory: ${{ github.workspace }}
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
