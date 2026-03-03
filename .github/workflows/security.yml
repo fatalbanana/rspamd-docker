@@ -54,27 +54,64 @@ jobs:
           echo Counted $TEST_VULN_COUNT vulnerabilities in test image.
           echo TEST_VULN_COUNT=$TEST_VULN_COUNT >> "$GITHUB_ENV"
 
-      - name: Push new tag if test image checked clean
+      - name: Determine fixed CVEs if test image checked clean
         if: ${{ env.RELEASE_VULN_COUNT != '0' && env.TEST_VULN_COUNT == '0' }}
-        uses: ./.github/actions/bump_tag
+        run: |
+          jq -r '.matches.[].vulnerability.id' report_release.json | sort | uniq > fixed_vulns.txt
+          echo "CREATE_RELEASE=1" >> "$GITHUB_ENV"
 
       - name: Check if test image is relatively better
         if: ${{ env.RELEASE_VULN_COUNT != '0' && env.TEST_VULN_COUNT != '0' }}
         run: |
-          jq '.matches.[].vulnerability.id' report_release.json | sort | uniq > release_vulns.txt
-          jq '.matches.[].vulnerability.id' report_test.json | sort | uniq > test_vulns.txt
+          jq -r '.matches.[].vulnerability.id' report_release.json | sort | uniq > release_vulns.txt
+          jq -r '.matches.[].vulnerability.id' report_test.json | sort | uniq > test_vulns.txt
           NEWVULNS=$(comm -23 test_vulns.txt release_vulns.txt | wc -l)
           if [ "$NEWVULNS" -gt 0 ]; then
             echo "New test image has $NEWVULNS novel vulnerabilities? Weird... :("
           fi
           FIXEDVULNS=$(comm -23 release_vulns.txt test_vulns.txt | wc -l)
           if [ "$FIXEDVULNS" -gt 0 ]; then
-            echo "Found $FIXEDVULNS vulnerabilities fixed in new test image. Bumping tag."
-            echo "BUMP_TAG=1" >> "$GITHUB_ENV"
+            echo "Found $FIXEDVULNS vulnerabilities fixed in new test image."
+            comm -23 release_vulns.txt test_vulns.txt > fixed_vulns.txt
+            echo "CREATE_RELEASE=1" >> "$GITHUB_ENV"
           else
             echo "test image not fixed yet? OK... :("
           fi
 
-      - name: Push new tag if test image is better
-        if: ${{ env.BUMP_TAG == '1' }}
-        uses: ./.github/actions/bump_tag
+      - name: Create release for fixed CVEs
+        if: ${{ env.CREATE_RELEASE == '1' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          LATEST_TAG=$(git tag --list "v[0-9]*.[0-9]*.[0-9]*+[0-9]*" --sort=-v:refname | head -n 1)
+          RELEASE_VERSION=${LATEST_TAG%%+*}
+          BUILD_VERSION=${LATEST_TAG##*+}
+          NEW_BUILD_VERSION=$((BUILD_VERSION + 1))
+          NEW_TAG="${RELEASE_VERSION}+${NEW_BUILD_VERSION}"
+          echo "Latest tag: $LATEST_TAG"
+          echo "New tag: $NEW_TAG"
+
+          {
+            echo "Automatic security rebuild to address the following CVEs:"
+            echo ""
+            while IFS= read -r vuln_id; do
+              case "$vuln_id" in
+                CVE-*)
+                  echo "- [$vuln_id](https://nvd.nist.gov/vuln/detail/$vuln_id)"
+                  ;;
+                GHSA-*)
+                  echo "- [$vuln_id](https://github.com/advisories/$vuln_id)"
+                  ;;
+                *)
+                  echo "- $vuln_id"
+                  ;;
+              esac
+            done < fixed_vulns.txt
+          } > release_notes.md
+
+          gh release create "$NEW_TAG" \
+            --target "$LATEST_TAG" \
+            --title "$NEW_TAG" \
+            --notes-file release_notes.md
+
+          gh workflow run release --ref "$NEW_TAG"
