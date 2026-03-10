@@ -88,7 +88,9 @@ jobs:
           BUILD_VERSION=${LATEST_TAG##*+}
           NEW_BUILD_VERSION=$((BUILD_VERSION + 1))
           NEW_TAG="${RELEASE_VERSION}+${NEW_BUILD_VERSION}"
+          TARGET_SHA=$(git rev-parse "${LATEST_TAG}^{commit}")
           echo "Latest tag: $LATEST_TAG"
+          echo "Target commit SHA: $TARGET_SHA"
           echo "New tag: $NEW_TAG"
 
           {
@@ -109,8 +111,11 @@ jobs:
             done < fixed_vulns.txt
           } > release_notes.md
 
+          # Push the new tag first, then create the release
+          git tag "$NEW_TAG" "$TARGET_SHA"
+          git push origin "$NEW_TAG"
+
           gh release create "$NEW_TAG" \
-            --target "$LATEST_TAG" \
             --title "$NEW_TAG" \
             --notes-file release_notes.md
 
