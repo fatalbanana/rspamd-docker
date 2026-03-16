@@ -19,7 +19,7 @@ jobs:
           token: ${{ secrets.RELEASE_TOKEN }}
 
       - name: Download grype
-        uses: anchore/scan-action/download-grype@v4
+        uses: anchore/scan-action/download-grype@v7
         id: grype
 
       - name: Check image
